@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: GlassTunnel
     second: {fileID: 2100000, guid: 5572143941ef33b4e851b4edaa10a08b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LightColor
+    second: {fileID: 2100000, guid: 0aab07059ea87b3408fa98b1cca3e90c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
