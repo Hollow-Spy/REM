@@ -22,7 +22,8 @@ public class PlayerFootsteps : MonoBehaviour
 
     [SerializeField] float TimeForStep=.2f,TimeForSprintStep=.1f;
 
-    
+
+ 
     float CurrentTime,TimeReach;
 
     PlayerMovement playermov;
@@ -75,7 +76,7 @@ public class PlayerFootsteps : MonoBehaviour
 
         }
 
-
+   
 
     }
 }
