@@ -938,7 +938,7 @@ GameObject:
   - component: {fileID: 86462747}
   - component: {fileID: 86462746}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Interactor1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1024,12 +1024,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 86462745}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.156, y: 0.342, z: 0.141}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -683.156, y: -383.658, z: 0.141}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_Father: {fileID: 1575847893}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &102042168
 PrefabInstance:
@@ -4187,7 +4187,7 @@ Transform:
   m_LocalScale: {x: 99.44777, y: 67.09405, z: 100}
   m_Children: []
   m_Father: {fileID: 930330243}
-  m_RootOrder: 1760
+  m_RootOrder: 1764
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &280863671
 MeshCollider:
@@ -5857,7 +5857,7 @@ Transform:
   m_LocalScale: {x: 0.11719504, y: 1, z: -0.014354722}
   m_Children: []
   m_Father: {fileID: 930330243}
-  m_RootOrder: 1687
+  m_RootOrder: 1717
   m_LocalEulerAnglesHint: {x: 0, y: 40.943, z: -90}
 --- !u!1 &375165205
 GameObject:
@@ -6100,12 +6100,12 @@ GameObject:
   - component: {fileID: 379289145}
   - component: {fileID: 379289144}
   m_Layer: 0
-  m_Name: Sphere5
+  m_Name: Interactor5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &379289144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6186,12 +6186,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 379289143}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.156, y: 0.342, z: 0.141}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -683.156, y: -383.658, z: 0.141}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 27
+  m_Father: {fileID: 1575847893}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &382012871
 GameObject:
@@ -8996,7 +8996,7 @@ Transform:
   m_LocalScale: {x: 99.44777, y: 67.09405, z: 100}
   m_Children: []
   m_Father: {fileID: 930330243}
-  m_RootOrder: 1725
+  m_RootOrder: 1755
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &511994279
 MeshCollider:
@@ -17044,7 +17044,7 @@ Transform:
   m_LocalScale: {x: 0.011543309, y: 1, z: -0.014354721}
   m_Children: []
   m_Father: {fileID: 930330243}
-  m_RootOrder: 1741
+  m_RootOrder: 1761
   m_LocalEulerAnglesHint: {x: 0, y: 86.892, z: -90}
 --- !u!1 &772020964
 GameObject:
@@ -19026,12 +19026,12 @@ GameObject:
   - component: {fileID: 883743905}
   - component: {fileID: 883743904}
   m_Layer: 0
-  m_Name: Sphere2
+  m_Name: Interactor2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &883743904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19112,12 +19112,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 883743903}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.156, y: 0.342, z: 0.141}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -683.156, y: -383.658, z: 0.141}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_Father: {fileID: 1575847893}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &899287238
 GameObject:
@@ -44287,7 +44287,7 @@ Transform:
   m_LocalScale: {x: 4.4956336, y: 4.4395185, z: 3.8827841}
   m_Children: []
   m_Father: {fileID: 930330243}
-  m_RootOrder: 1748
+  m_RootOrder: 1762
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1035434803
 MeshCollider:
@@ -45885,7 +45885,7 @@ Transform:
   m_LocalScale: {x: 0.015334738, y: 1, z: -0.014354723}
   m_Children: []
   m_Father: {fileID: 930330243}
-  m_RootOrder: 1716
+  m_RootOrder: 1746
   m_LocalEulerAnglesHint: {x: 0, y: 66.45, z: -90}
 --- !u!1 &1131102617
 GameObject:
@@ -46187,7 +46187,7 @@ Transform:
   m_LocalScale: {x: 4.4956336, y: 4.4395185, z: 3.8827841}
   m_Children: []
   m_Father: {fileID: 930330243}
-  m_RootOrder: 1728
+  m_RootOrder: 1758
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1138535713
 MeshCollider:
@@ -46527,7 +46527,7 @@ Transform:
   m_LocalScale: {x: 0.27174187, y: 1, z: -0.14874302}
   m_Children: []
   m_Father: {fileID: 930330243}
-  m_RootOrder: 1738
+  m_RootOrder: 1760
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1165030276
 MeshRenderer:
@@ -46821,7 +46821,7 @@ Transform:
   m_LocalScale: {x: 99.44777, y: 67.09405, z: 100}
   m_Children: []
   m_Father: {fileID: 930330243}
-  m_RootOrder: 1708
+  m_RootOrder: 1738
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1190092717
 MeshCollider:
@@ -47519,12 +47519,12 @@ GameObject:
   - component: {fileID: 1248568679}
   - component: {fileID: 1248568678}
   m_Layer: 0
-  m_Name: Sphere4
+  m_Name: Interactor4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1248568678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47605,12 +47605,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1248568677}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.156, y: 0.342, z: 0.141}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -683.156, y: -383.658, z: 0.141}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_Father: {fileID: 1575847893}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1258635378
 GameObject:
@@ -47685,12 +47685,12 @@ GameObject:
   - component: {fileID: 1262855681}
   - component: {fileID: 1262855680}
   m_Layer: 0
-  m_Name: Sphere3
+  m_Name: Interactor3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1262855680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47771,12 +47771,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1262855679}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.156, y: 0.342, z: 0.141}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -683.156, y: -383.658, z: 0.141}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_Father: {fileID: 1575847893}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1267673046
 GameObject:
@@ -47918,7 +47918,7 @@ Transform:
   m_LocalScale: {x: 99.44777, y: 67.09405, z: 100}
   m_Children: []
   m_Father: {fileID: 930330243}
-  m_RootOrder: 1753
+  m_RootOrder: 1763
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1271296701
 MeshCollider:
@@ -49385,6 +49385,7 @@ RectTransform:
   - {fileID: 469009659}
   - {fileID: 1246760200}
   - {fileID: 541870294}
+  - {fileID: 1575847893}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -49450,6 +49451,12 @@ MonoBehaviour:
   - {fileID: 1267673050}
   - {fileID: 919112011}
   - {fileID: 1041020992}
+  PopUpCams:
+  - {fileID: 382012875}
+  - {fileID: 1586214761}
+  PopUpCamsStretched:
+  - {fileID: 1848003170}
+  - {fileID: 1642246843}
   PossiblePops: 00000000010000000200000003000000
   RoomCameras:
   - {fileID: 1687258584}
@@ -49487,6 +49494,12 @@ MonoBehaviour:
   - {fileID: 203197467}
   - {fileID: 520111293}
   - {fileID: 836103662}
+  RayCastInteractors:
+  - {fileID: 883743904}
+  - {fileID: 1262855680}
+  - {fileID: 1248568678}
+  - {fileID: 379289144}
+  MainRayCastInteractor: {fileID: 86462746}
 --- !u!1 &1376474222
 GameObject:
   m_ObjectHideFlags: 0
@@ -53325,6 +53338,46 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1575847892
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1575847893}
+  m_Layer: 5
+  m_Name: InteractMouses
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1575847893
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1575847892}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 86462749}
+  - {fileID: 883743907}
+  - {fileID: 1262855683}
+  - {fileID: 1248568681}
+  - {fileID: 379289147}
+  m_Father: {fileID: 1372565882}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1586214758
 GameObject:
   m_ObjectHideFlags: 0

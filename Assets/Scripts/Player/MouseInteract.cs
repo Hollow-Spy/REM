@@ -9,10 +9,10 @@ public class MouseInteract : MonoBehaviour
     [SerializeField] Vector3 ScreenPos;
     [SerializeField] Vector3 worldPos;
     [SerializeField] LayerMask InteractMask;
-    [SerializeField] Camera Cam;
+    public Camera Cam;
 
     [SerializeField] RawImage img_screen;
-    [SerializeField] Texture tex_;
+    public Texture tex_;
 
     float OGResX, OGResY;
 
@@ -20,11 +20,18 @@ public class MouseInteract : MonoBehaviour
     [SerializeField] bool OnScreen;
 
     [SerializeField] float XOffset, YOffset;
-    private void Awake()
+
+   
+  
+
+    private void OnEnable()
     {
         OGResX = img_screen.rectTransform.rect.width;
         OGResY = img_screen.rectTransform.rect.height;
     }
+
+   
+   
 
     // Update is called once per frame
     void Update()

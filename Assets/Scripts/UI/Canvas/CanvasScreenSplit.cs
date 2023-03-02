@@ -13,6 +13,7 @@ public class CanvasScreenSplit : MonoBehaviour
 
     [SerializeField] GameObject RightCensor, BottomCensor;
     [SerializeField] RawImage[] PopUpImgs;
+    [SerializeField] Camera[] PopUpCams, PopUpCamsStretched;
     public List<int> PossiblePops = new List<int> {0,1,2,3 };
    
     [SerializeField] Camera[] RoomCameras; //main ones
@@ -23,13 +24,23 @@ public class CanvasScreenSplit : MonoBehaviour
 
     bool RightStretch,CurrentlyStretchingR,CurrentlyDeStretchingR; //og 0 //stretch -351
     bool BottomStretch, CurrentlyStretchingB, CurrentlyDeStretchingB; //og 0 // stretch 193
-    
+
+    [SerializeField] MouseInteract[] RayCastInteractors;
+    [SerializeField] MouseInteract MainRayCastInteractor;
     public void SwitchMainCam(int num)
     {
         RoomCameras[CurrentEnabled].gameObject.SetActive(false);
         RoomCameras[num].gameObject.SetActive(true);
         MainCamImg.texture = MainRenderTextures[num];
         CurrentEnabled = num;
+        //rayca
+        MainRayCastInteractor.gameObject.SetActive(false);
+        MainRayCastInteractor.tex_ = MainRenderTextures[num];
+        MainRayCastInteractor.Cam = RoomCameras[num];
+        MainRayCastInteractor.gameObject.SetActive(true);
+
+
+
     }
     private void Update()
     {
@@ -71,6 +82,11 @@ public class CanvasScreenSplit : MonoBehaviour
             {
                 PopUpImgs[pick].texture = PopRenderTextures[num];
                 PopUpImgs[pick].color = Color.white;
+                //raycasts
+                RayCastInteractors[pick].gameObject.SetActive(true);
+                RayCastInteractors[pick].Cam = PopUpCams[num];
+                RayCastInteractors[pick].tex_ = PopRenderTextures[num];
+
 
                 RighStretcher = RightStretchNumerator();
                 StartCoroutine(RighStretcher);
@@ -79,6 +95,10 @@ public class CanvasScreenSplit : MonoBehaviour
             {
                 PopUpImgs[pick].texture = PopRenderTexturesStretched[num];
                 PopUpImgs[pick].color = Color.white;
+                //raycaster
+                RayCastInteractors[pick].gameObject.SetActive(true);
+                RayCastInteractors[pick].Cam = PopUpCamsStretched[num];
+                RayCastInteractors[pick].tex_ = PopRenderTexturesStretched[num];
 
                 BottomStretcher = BottomStretchNumerator();
                 StartCoroutine(BottomStretcher);
@@ -262,6 +282,7 @@ public class CanvasScreenSplit : MonoBehaviour
             {
                 if(PopUpImgs[i].texture == PopRenderTextures[num] || PopUpImgs[i].texture == PopRenderTexturesStretched[num])
                 {
+                    RayCastInteractors[i].gameObject.SetActive(false);
                     PopUpImgs[i].texture = null;
                     TextTypers[i].ClearText();
                     PopUpImgs[i].color = Color.black;
