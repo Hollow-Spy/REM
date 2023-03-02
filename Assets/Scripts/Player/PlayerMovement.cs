@@ -17,8 +17,11 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded;
     public bool isSprinting,isWalking;
 
+    float InitialYPos;
+
     void Start()
     {
+        InitialYPos = transform.position.y;
         animator = GetComponent<Animator>();
         charController = GetComponent<CharacterController>();
     }
@@ -84,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
 
         currentVelocity.y += Gravity * Time.deltaTime;
         charController.Move(currentVelocity * Time.deltaTime);
+        transform.position = new Vector3(transform.position.x, InitialYPos, transform.position.z);
 
     }
 }
