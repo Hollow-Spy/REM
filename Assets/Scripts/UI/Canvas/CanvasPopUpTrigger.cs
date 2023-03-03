@@ -5,12 +5,14 @@ using UnityEngine;
 public class CanvasPopUpTrigger : MonoBehaviour
 {
 
-    [SerializeField] CanvasScreenSplit Splitter;
-    [SerializeField] int PopNum;
+    public CanvasScreenSplit Splitter;
+    public int PopNum;
+    public bool canActivate;
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
+            canActivate = true;
             Splitter.PopUp(PopNum);
         
         }
@@ -19,6 +21,7 @@ public class CanvasPopUpTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            canActivate = false;
             Splitter.PopDown(PopNum);
 
         }

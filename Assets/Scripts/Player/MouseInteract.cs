@@ -68,12 +68,19 @@ public class MouseInteract : MonoBehaviour
             ScreenPos.y = ScreenPos.y - offset * divid;
         }
 
-
-        Ray ray = Cam.ScreenPointToRay(ScreenPos);
-        if(Physics.Raycast(ray,out RaycastHit hitData, 100, InteractMask ))
+        if(OnScreen)
         {
-            worldPos = hitData.point;
+            Ray ray = Cam.ScreenPointToRay(ScreenPos);
+            if (Physics.Raycast(ray, out RaycastHit hitData, 100, InteractMask))
+            {
+                if(Input.GetMouseButton(0))
+                {
+                    hitData.collider.gameObject.SendMessage("Interaction");
+                }
+                //worldPos = hitData.point;
+            }
+          //  transform.position = worldPos;
         }
-        transform.position = worldPos;
+       
     }
 }

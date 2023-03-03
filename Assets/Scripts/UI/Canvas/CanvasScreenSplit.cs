@@ -42,15 +42,7 @@ public class CanvasScreenSplit : MonoBehaviour
 
 
     }
-    private void Update()
-    {
-        //Debug.Log(MainCamImg.rectTransform.rect.xMax);
-    }
-    private void Start()
-    {
-       // StartCoroutine(RightStretchNumerator());
-
-    }
+   
     public void PopUpText(string msg,int num)
     {
         if (PossiblePops.Count < 4)
@@ -82,10 +74,12 @@ public class CanvasScreenSplit : MonoBehaviour
             {
                 PopUpImgs[pick].texture = PopRenderTextures[num];
                 PopUpImgs[pick].color = Color.white;
+                PopUpCams[num].gameObject.SetActive(true);
                 //raycasts
                 RayCastInteractors[pick].gameObject.SetActive(true);
                 RayCastInteractors[pick].Cam = PopUpCams[num];
                 RayCastInteractors[pick].tex_ = PopRenderTextures[num];
+                
 
 
                 RighStretcher = RightStretchNumerator();
@@ -95,6 +89,7 @@ public class CanvasScreenSplit : MonoBehaviour
             {
                 PopUpImgs[pick].texture = PopRenderTexturesStretched[num];
                 PopUpImgs[pick].color = Color.white;
+                PopUpCamsStretched[num].gameObject.SetActive(true);
                 //raycaster
                 RayCastInteractors[pick].gameObject.SetActive(true);
                 RayCastInteractors[pick].Cam = PopUpCamsStretched[num];
@@ -283,6 +278,9 @@ public class CanvasScreenSplit : MonoBehaviour
                 if(PopUpImgs[i].texture == PopRenderTextures[num] || PopUpImgs[i].texture == PopRenderTexturesStretched[num])
                 {
                     RayCastInteractors[i].gameObject.SetActive(false);
+                    PopUpCamsStretched[num].gameObject.SetActive(false);
+                    PopUpCams[num].gameObject.SetActive(false);
+
                     PopUpImgs[i].texture = null;
                     TextTypers[i].ClearText();
                     PopUpImgs[i].color = Color.black;
