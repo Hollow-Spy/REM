@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform GroundCheck;
     [SerializeField] LayerMask GroundMask;
     Vector3 currentVelocity;
+    public float SpeedTap=0;
+
 
     bool isGrounded;
     public bool isSprinting,isWalking;
@@ -42,10 +44,7 @@ public class PlayerMovement : MonoBehaviour
         if(movedir != Vector3.zero)
         {
             transform.Rotate(0, movedir.x * Time.deltaTime * RotationSpeed,0);
-            //charController.Move(movedir * MovementSpeed * Time.deltaTime);
-          //  Vector3 Movement = new Vector3(-movedir.z, 0, 0);
-           // Debug.Log(Movement);
-
+          
           
            if(movedir.z > 0)
             {
@@ -57,8 +56,9 @@ public class PlayerMovement : MonoBehaviour
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
                     isSprinting = true;
-                    animator.SetFloat("Speed", 2);
-                    speed *= SprintMultiplier;
+                    float SprintSpeed = SprintMultiplier + SpeedTap;
+                    animator.SetFloat("Speed", SprintSpeed-1);
+                    speed *= SprintSpeed;
                 }
                 else
                 {

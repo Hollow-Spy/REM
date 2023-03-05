@@ -17,21 +17,29 @@ public class MouseInteract : MonoBehaviour
     float OGResX, OGResY;
 
     [SerializeField] float divid;
-    [SerializeField] bool OnScreen;
-
+    public bool OnScreen;
+    bool wasSelecting;
     [SerializeField] float XOffset, YOffset;
 
-   
-  
+    
+   [SerializeField] CursorSwitch MouseScript;
 
     private void OnEnable()
     {
         OGResX = img_screen.rectTransform.rect.width;
         OGResY = img_screen.rectTransform.rect.height;
     }
+  
 
-   
-   
+    private void OnDisable()
+    {
+        if(wasSelecting)
+        {
+            wasSelecting = false;
+            MouseScript.SwitchCursor();
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -73,14 +81,30 @@ public class MouseInteract : MonoBehaviour
             Ray ray = Cam.ScreenPointToRay(ScreenPos);
             if (Physics.Raycast(ray, out RaycastHit hitData, 100, InteractMask))
             {
+                if(!wasSelecting)
+                {
+                    wasSelecting = true;
+                    MouseScript.SwitchSelect();
+                }
+
+
                 if(Input.GetMouseButton(0))
                 {
                     hitData.collider.gameObject.SendMessage("Interaction");
                 }
                 //worldPos = hitData.point;
             }
+            else
+            {
+                if (wasSelecting)
+                {
+                    wasSelecting = false;
+                    MouseScript.SwitchCursor();
+                }
+            }
           //  transform.position = worldPos;
         }
        
+     
     }
 }

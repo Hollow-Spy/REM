@@ -21,12 +21,15 @@ public class PlayerFootsteps : MonoBehaviour
 
 
     [SerializeField] float TimeForStep=.2f,TimeForSprintStep=.1f;
-
+    public float SprintTapIncrement=0;
 
  
     float CurrentTime,TimeReach;
 
     PlayerMovement playermov;
+
+  
+
     private void Start()
     {
         CurrentTime = TimeForStep;
@@ -58,7 +61,8 @@ public class PlayerFootsteps : MonoBehaviour
         {
             if (playermov.isSprinting)
             {
-                TimeReach = TimeForSprintStep;
+
+                TimeReach = TimeForSprintStep - (playermov.SpeedTap * 0.05f);
             }
             else
             {

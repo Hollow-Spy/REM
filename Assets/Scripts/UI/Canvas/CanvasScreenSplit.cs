@@ -27,6 +27,7 @@ public class CanvasScreenSplit : MonoBehaviour
 
     [SerializeField] MouseInteract[] RayCastInteractors;
     [SerializeField] MouseInteract MainRayCastInteractor;
+    [SerializeField] Camera MainCam;
     public void SwitchMainCam(int num)
     {
         RoomCameras[CurrentEnabled].gameObject.SetActive(false);
@@ -38,6 +39,12 @@ public class CanvasScreenSplit : MonoBehaviour
         MainRayCastInteractor.tex_ = MainRenderTextures[num];
         MainRayCastInteractor.Cam = RoomCameras[num];
         MainRayCastInteractor.gameObject.SetActive(true);
+        //main cam switch
+        /*MainCam.fieldOfView = RoomCameras[num].fieldOfView;
+        MainCam.transform.position = RoomCameras[num].transform.position;
+        MainCam.transform.rotation = RoomCameras[num].transform.rotation;
+        MainCam.transform.localScale = RoomCameras[num].transform.localScale;
+        */
 
 
 

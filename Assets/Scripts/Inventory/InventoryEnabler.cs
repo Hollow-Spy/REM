@@ -13,7 +13,7 @@ public class InventoryEnabler : MonoBehaviour
    
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape) && !busy)
+        if(Input.GetKeyDown(KeyCode.E) && !busy)
         {
             Fading = true;
             FadeEnd = false;

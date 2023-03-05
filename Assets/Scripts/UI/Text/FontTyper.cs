@@ -23,13 +23,7 @@ public class FontTyper : MonoBehaviour
 
     public void Type(string msg)
     {
-    
-
-        if(isTyping)
-        {
-            StopCoroutine(Typer);
-        }
-        textComp.text = "";
+        ClearText();
         message = msg;
 
         Typer = TypeNumerator();
