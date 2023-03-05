@@ -12,8 +12,8 @@ public class DoorOpener : MonoBehaviour
     [SerializeField] GameObject[] OpenIcon, CloseIcon, BlockIcon;
     // Update is called once per frame
 
-    bool isBusy;
-    bool isOpen;
+    public bool isBusy, isOpen;
+    
     public void Interact()
     {
         if(!isBusy)
@@ -29,6 +29,43 @@ public class DoorOpener : MonoBehaviour
             }
 
         }
+    }
+
+    public bool ForceOpen()
+    {
+        if (!isBusy)
+        {
+            if (!isOpen)
+            {
+                OpenDoor();
+                isOpen = true;
+
+
+            }
+            else
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool ForceClose()
+    {
+        if(!isBusy )
+        {
+            if(isOpen)
+            {
+                isOpen = false;
+                CloseDoor();
+
+            }
+            else
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void BusyON()
