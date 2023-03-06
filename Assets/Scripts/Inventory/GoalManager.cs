@@ -13,11 +13,15 @@ public class GoalManager : MonoBehaviour
     [SerializeField] GameObject jingle;
     private void Start()
     {
-        UpdateGoal(CurrentGoal);
+        GoalText.text = Goals[CurrentGoal];
+       // UpdateGoal(CurrentGoal);
     }
+
+
 
     public void UpdateGoal(int num)
     {
+        CurrentGoal = num;
         GoalText.text = Goals[num];
         GoalUpdatedAnim.Play("Updated");
         GoalUpdatedTyper.Type("Goal Updated");

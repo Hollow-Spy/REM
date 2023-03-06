@@ -7,17 +7,59 @@ public class DoorOpener : MonoBehaviour
 
     public Animator dooranim;
     public GameObject sound,sound2;
-    public GameObject melody1, melody2;
+    public GameObject melody1, melody2,DenySound;
 
     [SerializeField] GameObject[] OpenIcon, CloseIcon, BlockIcon;
     // Update is called once per frame
 
-    public bool isBusy, isOpen;
-    
+    public bool isBusy, isOpen,isBlocked;
+
+ 
+
+   
+    public bool ForceCloseNBlock()
+    {
+        if(ForceClose())
+        {
+            for (int i = 0; i < OpenIcon.Length; i++)
+            {
+                OpenIcon[i].SetActive(false);
+                CloseIcon[i].SetActive(false);
+                BlockIcon[i].SetActive(true);
+            }
+           
+            isBlocked = true;
+
+            return true;
+
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void Unlock()
+    {
+        isBlocked = false;
+    }
+
     public void Interact()
     {
         if(!isBusy)
         {
+           if(isBlocked)
+            {
+                for (int i = 0; i < OpenIcon.Length; i++)
+                {
+                    BlockIcon[i].GetComponent<Animator>().Play("ButtonFlash", - 1,  0.0f); 
+
+                }
+                Instantiate(DenySound, transform.position, Quaternion.identity);
+              
+                return;
+            }
+
             isOpen = !isOpen;
             if (isOpen)
             {
@@ -35,6 +77,8 @@ public class DoorOpener : MonoBehaviour
     {
         if (!isBusy)
         {
+           
+            
             if (!isOpen)
             {
                 OpenDoor();
@@ -54,7 +98,8 @@ public class DoorOpener : MonoBehaviour
     {
         if(!isBusy )
         {
-            if(isOpen)
+           
+            if (isOpen)
             {
                 isOpen = false;
                 CloseDoor();

@@ -88,7 +88,7 @@ public class MouseInteract : MonoBehaviour
                 }
 
 
-                if(Input.GetMouseButton(0))
+                if(Input.GetMouseButtonDown(0))
                 {
                     hitData.collider.gameObject.SendMessage("Interaction");
                 }
