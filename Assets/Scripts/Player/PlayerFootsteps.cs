@@ -62,7 +62,7 @@ public class PlayerFootsteps : MonoBehaviour
             if (playermov.isSprinting)
             {
 
-                TimeReach = TimeForSprintStep - (playermov.SpeedTap * 0.05f);
+                TimeReach = TimeForSprintStep - (playermov.SpeedTap * 0.04f);
             }
             else
             {

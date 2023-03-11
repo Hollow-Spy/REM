@@ -7,7 +7,7 @@ public class DisengageButton : MonoBehaviour
     [SerializeField] GameObject Alert;
     public void Interaction()
     {
-       gameObject.tag = "Untagged";
+       gameObject.layer = 0;
         Alert.SetActive(true);
         
     }

@@ -17,6 +17,14 @@ public class CanvasPopUpTrigger : MonoBehaviour
         
         }
     }
+    private void OnDisable()
+    {
+       if(canActivate)
+        {
+            canActivate = false;
+            Splitter.PopDown(PopNum);
+        }
+    }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))

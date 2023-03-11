@@ -9,11 +9,20 @@ public class InventoryEnabler : MonoBehaviour
     bool OnScreen = false, busy = false;
   public  static bool Fading = false, FadeEnd;
     [SerializeField] GameObject InventoryObject,BlackFadeObject;
+    [SerializeField] SlotShower Slots;
     
    
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E) && !busy)
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            SwitchUpInventory();
+        }
+    }
+
+    public void SwitchUpInventory()
+    {
+        if(!busy)
         {
             Fading = true;
             FadeEnd = false;
@@ -21,7 +30,10 @@ public class InventoryEnabler : MonoBehaviour
             OnScreen = !OnScreen;
             BlackFadeObject.SetActive(true);
             StartCoroutine(Switch());
+
         }
+
+
     }
 
 
@@ -35,6 +47,10 @@ public class InventoryEnabler : MonoBehaviour
         }
        
         InventoryObject.SetActive(OnScreen);
+        if(OnScreen)
+        {
+            Slots.OrganizeSlots();
+        }
 
         while (!FadeEnd)
         {

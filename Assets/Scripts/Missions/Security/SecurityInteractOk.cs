@@ -7,7 +7,7 @@ public class SecurityInteractOk : MonoBehaviour
     [SerializeField] SecurityManager manager;
     public void Interaction()
     {
-        gameObject.tag = "Untagged";
+      
         manager.OkayPressed();
 
     }

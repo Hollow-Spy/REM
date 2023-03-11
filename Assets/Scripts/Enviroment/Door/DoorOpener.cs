@@ -42,8 +42,18 @@ public class DoorOpener : MonoBehaviour
     public void Unlock()
     {
         isBlocked = false;
+        for (int i = 0; i < OpenIcon.Length; i++)
+        {
+            OpenIcon[i].SetActive(true);
+            CloseIcon[i].SetActive(false);
+            BlockIcon[i].SetActive(false);
+        }
     }
 
+    public bool IsBlocked()
+    {
+        return BlockIcon[0];
+    }
     public void Interact()
     {
         if(!isBusy)

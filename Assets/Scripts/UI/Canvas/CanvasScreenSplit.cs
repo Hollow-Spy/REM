@@ -28,6 +28,9 @@ public class CanvasScreenSplit : MonoBehaviour
     [SerializeField] MouseInteract[] RayCastInteractors;
     [SerializeField] MouseInteract MainRayCastInteractor;
     [SerializeField] Camera MainCam;
+   
+
+  
     public void SwitchMainCam(int num)
     {
         RoomCameras[CurrentEnabled].gameObject.SetActive(false);

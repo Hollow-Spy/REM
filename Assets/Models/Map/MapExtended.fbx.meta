@@ -12,6 +12,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: LightBulb
+    second: {fileID: 2100000, guid: 669198f5286eac644b9249e60a0c11b5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: LightColor
     second: {fileID: 2100000, guid: 0aab07059ea87b3408fa98b1cca3e90c, type: 2}
   - first:

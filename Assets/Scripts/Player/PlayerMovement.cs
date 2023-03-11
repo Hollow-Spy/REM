@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     isSprinting = true;
                     float SprintSpeed = SprintMultiplier + SpeedTap;
-                    animator.SetFloat("Speed", SprintSpeed);
+                    animator.SetFloat("Speed", SprintSpeed - .4f);
                     speed *= SprintSpeed;
                 }
                 else

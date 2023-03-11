@@ -15,6 +15,10 @@ public class DoorInteract : MonoBehaviour
         {
            
             doorScript.Interact();
+            if(doorScript.isBlocked)
+            {
+               CanvasTrigger.Splitter.PopUpText("Door is Locked", CanvasTrigger.PopNum);
+            }
         }
     }
   
