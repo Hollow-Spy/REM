@@ -10,6 +10,11 @@ public class FontTyper : MonoBehaviour
     IEnumerator Typer;
     bool isTyping;
 
+    public bool IsTpying()
+    {
+        return isTyping;
+    }
+
     public void ClearText()
     {
         if (isTyping)
@@ -39,6 +44,20 @@ public class FontTyper : MonoBehaviour
             increment++;
             yield return new WaitForSeconds(.025f);
             textComp.text = message.Substring(0, increment);
+
+          
+            if(textComp.text[increment-1] == ',')
+            {
+                yield return new WaitForSeconds(.5f);
+            }
+            if (textComp.text[increment-1] == '.')
+            {
+                yield return new WaitForSeconds(1f);
+            }
+            if (textComp.text[increment - 1] == '?')
+            {
+                yield return new WaitForSeconds(1.5f);
+            }
         }
         textComp.text = message;
         isTyping = false;

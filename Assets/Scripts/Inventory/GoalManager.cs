@@ -15,6 +15,7 @@ public class GoalManager : MonoBehaviour
     {
         GoalText.text = Goals[CurrentGoal];
        // UpdateGoal(CurrentGoal);
+       
     }
 
 

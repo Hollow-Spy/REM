@@ -19,13 +19,68 @@ public class SlotShower : MonoBehaviour
     {
        // AddItem("Security Code");
         selectedSlot.name = "0";
-        
-        
-      
 
+        /*  AddItem("Staff ID");
+           AddItem("Light Charm");
+           AddItem("Security Code");
 
+           Invoke("callit", 5);*/
     }
 
+    /* void callit()
+     {
+         RemoveItem("Security Code");
+     }*/
+    public void RemoveItem(string ItemName)
+    {
+
+        int index = GetItem(ItemName);
+        Items[index].gameObject.SetActive(false);
+
+        int itemInSlotList = GetItemIndex(ItemName);
+
+        SlotTaken[itemInSlotList] = false;
+        ItemsStored[itemInSlotList] = null;
+
+
+        bool GapFound=false;
+        int GapIndex=-1; //find the gap between items in the list
+        for(int i=0;i<ItemsStored.Length;i++)
+        {
+            
+            if(ItemsStored[i]==null)
+            {
+                GapFound = true;
+                
+            }
+            else
+            {
+                if(GapFound)
+                {
+                    GapIndex = i-1;
+                    i = ItemsStored.Length;
+                }
+                else
+                {
+                    GapFound = false;
+                }
+            }
+        }
+        if(GapIndex != -1)
+        {
+            
+            for (int i = GapIndex+1; i < ItemsStored.Length; i++)
+            {
+                ItemsStored[i - 1] = ItemsStored[i];
+                Usable[i - 1] = Usable[i];
+                SlotTaken[i - 1] = SlotTaken[i];
+            }
+        }
+
+        ItemsCollectedCout--;
+        Debug.Log(ItemsCollectedCout);
+
+    }
 
 
     public void SetItemUsable(string name, bool state) //set a certain item from the list usable
@@ -164,8 +219,12 @@ public class SlotShower : MonoBehaviour
             {
                
                 Items[GetItem(ItemsStored[i])].position = Slots[i].position;
+               
+             
             }
         }
+
+      
     }
 
     

@@ -10,11 +10,11 @@ public class LightCharmItem : MonoBehaviour
     [SerializeField] InventoryEnabler inventory;
     [SerializeField] GameObject LightOutMission;
     [SerializeField] SlotShower slots;
+    [SerializeField] GameObject LightCharm;
     bool Used;
     
     private void OnEnable()
     {
-        
         slots.SetItemUsable("Light Charm", LightOutMission.activeSelf);     
     }
     public void Use()
@@ -22,8 +22,9 @@ public class LightCharmItem : MonoBehaviour
       if(!Used)
         {
             Used = true;
+            LightCharm.SetActive(true);
             inventory.SwitchUpInventory();
-
+           
         }
     }
     public void Inspect()

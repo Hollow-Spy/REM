@@ -8,6 +8,7 @@ public class CanvasPopUpTrigger : MonoBehaviour
     public CanvasScreenSplit Splitter;
     public int PopNum;
     public bool canActivate;
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
