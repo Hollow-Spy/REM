@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+
 public class FontTyper : MonoBehaviour
 {
+  
     [SerializeField] TextMeshProUGUI textComp;
     string message;
     IEnumerator Typer;

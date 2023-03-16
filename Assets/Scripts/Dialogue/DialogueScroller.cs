@@ -5,15 +5,19 @@ using TMPro;
 
 public class DialogueScroller : MonoBehaviour
 {
+    public bool DialogueDone;
     [SerializeField] List<FontTyper> Prompts;
     [SerializeField] List<string> Texts;
     [SerializeField] GameObject[] Batches;
     [SerializeField] RectTransform ScrollPos;
 
     [SerializeField] int[] TextEnd;
-
+    [SerializeField] DialogueLoadScene Loader;
+    [SerializeField] float InitialTime;
     private void Start()
     {
+
+
         TextEnd = new int[Batches.Length];
         int EndIndex = 0;
        for(int i=0;i< Batches.Length;i++)
@@ -42,7 +46,7 @@ public class DialogueScroller : MonoBehaviour
     {
         int CurrentBatch = 0;
         int CurrentText=0;
-        
+        yield return new WaitForSeconds(InitialTime);
         while(CurrentBatch < Batches.Length)
         {
             Batches[CurrentBatch].SetActive(true);
@@ -72,6 +76,13 @@ public class DialogueScroller : MonoBehaviour
 
 
             CurrentBatch++;
+        }
+
+       
+
+        if(Loader)
+        {
+            Loader.loadScene();
         }
     }
 

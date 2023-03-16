@@ -11,6 +11,10 @@ public class EnergyManager : MonoBehaviour
 
     [SerializeField] GameObject LightCharmTrigger,Mission4;
 
+    [SerializeField] SlotShower slots;
+
+    [SerializeField] GameObject LightGuide,LightCharmObj;
+
     private void Start()
     {
         goalmanager.UpdateGoal(3);
@@ -23,6 +27,21 @@ public class EnergyManager : MonoBehaviour
         WhiteLight.sharedMaterials[2].SetColor("_EmissionColor",Color.black);
         RedLight.sharedMaterials[1].SetColor("_EmissionColor", Color.black);
 
+        if(slots.GetItemIndex("Light Charm") == -1)
+        {
+            LightGuide.SetActive(true);
+            StartCoroutine(WaitingColection());
+        }
+        
+    }
+
+    IEnumerator WaitingColection()
+    {
+        while(LightCharmObj.activeSelf)
+        {
+            yield return null;
+        }
+        LightGuide.SetActive(false);
     }
 
     public void BulbClick()

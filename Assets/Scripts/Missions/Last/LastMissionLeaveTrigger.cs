@@ -13,19 +13,15 @@ public class LastMissionLeaveTrigger : MonoBehaviour
         {
             busy = true;
             FadeOut.SetActive(true);
-            
+            StartCoroutine(LoadNext());
 
         }
     }
 
     IEnumerator LoadNext()
     {
-        while(AudioListener.volume > 0)
-        {
-            AudioListener.volume -= .7f * Time.deltaTime;
-            yield return null;
-        }
-        yield return new WaitForSeconds(1f);
+       
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene(SceneName);
     }
 }

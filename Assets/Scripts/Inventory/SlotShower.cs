@@ -171,7 +171,7 @@ public class SlotShower : MonoBehaviour
         return ItemsStored[index];
     }
 
-    int GetItemIndex(string name) // get item id according to list of enabled items
+    public int GetItemIndex(string name) // get item id according to list of enabled items
     {
         for(int i=0;i<ItemsCollectedCout;i++)
         {
@@ -182,6 +182,8 @@ public class SlotShower : MonoBehaviour
         }
         return -1;
     }
+
+  
 
    public void AddItem(string name) // add item by name
     {

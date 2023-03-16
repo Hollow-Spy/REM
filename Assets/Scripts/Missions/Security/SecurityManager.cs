@@ -69,6 +69,7 @@ public class SecurityManager : MonoBehaviour
         RoomDoorInteract.SetActive(true);
 
         FindObjectOfType<GoalManager>().UpdateGoal(1);
+     
     }
 
 

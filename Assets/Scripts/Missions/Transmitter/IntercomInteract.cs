@@ -133,10 +133,10 @@ public class IntercomInteract : MonoBehaviour
         OuterCircleRenderer.color = Color.green;
 
         Instantiate(SucessSound, transform.position, Quaternion.identity);
-        ObstacleSpeed = ObstacleSpeed * 1.12f;
-        ObstacleRotationSpeed = ObstacleRotationSpeed * 1.15f;
-        MinSpawnTime = MinSpawnTime * 0.87f;
-        MaxSpawnTime = MaxSpawnTime * 0.87f;
+        ObstacleSpeed = ObstacleSpeed * 1.1f;
+        ObstacleRotationSpeed = ObstacleRotationSpeed * 1.1f;
+        MinSpawnTime = MinSpawnTime * 0.9f;
+        MaxSpawnTime = MaxSpawnTime * 0.97f;
         manager.AddTransmittor();
 
         Invoke("RemoveTrigger", 2);

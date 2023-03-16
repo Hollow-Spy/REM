@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1;
         InitialYPos = transform.position.y;
         animator = GetComponent<Animator>();
         charController = GetComponent<CharacterController>();
