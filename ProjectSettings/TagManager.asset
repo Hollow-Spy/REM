@@ -9,6 +9,7 @@ TagManager:
   - PopUpCam
   - PopUpCamStretch
   - Transmitter
+  - Bot
   layers:
   - Default
   - TransparentFX

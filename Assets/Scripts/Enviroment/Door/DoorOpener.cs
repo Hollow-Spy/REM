@@ -87,8 +87,6 @@ public class DoorOpener : MonoBehaviour
     {
         if (!isBusy)
         {
-           
-            
             if (!isOpen)
             {
                 OpenDoor();
