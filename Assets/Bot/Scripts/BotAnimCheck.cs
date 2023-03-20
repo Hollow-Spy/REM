@@ -6,6 +6,7 @@ public class BotAnimCheck : MonoBehaviour
 {
     [SerializeField] Animator animator;
     [SerializeField] BotFuzzy BotAI;
+    [SerializeField] GameObject WalkSound;
    public void StartPatrolCheck()
     {
         animator.SetBool("PatrolCheck", true);
@@ -17,6 +18,11 @@ public class BotAnimCheck : MonoBehaviour
     public void CanMove()
     {
         BotAI.EnableSpeed();
+    }
+
+    public void PlayWalkSound()
+    {
+        Instantiate(WalkSound, transform.position, Quaternion.identity);
     }
     public void CannotMove()
     {
