@@ -21,13 +21,16 @@ public class BotFuzzy : MonoBehaviour
     IEnumerator PatrolCoroutine;
 
     [Header("Movement Settings")]
-    [SerializeField] float MoveSpeed;
+    [SerializeField] float MoveSpeed; //sprint mode needs to be added
     float MoveSpeedBeforeStop;
-    //sprint mode
+
+
+
     private void Start()
     {
         MoveSpeedBeforeStop = MoveSpeed;
         agent.speed = MoveSpeed;
+
     }
 
     void AgentMove(Vector3 destination)
@@ -170,5 +173,7 @@ public class BotFuzzy : MonoBehaviour
         {
             SetState("Patrol");
         }
+
+     
     }
 }
