@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+
 public static class EditorDuplicateCommand
 {
     [MenuItem("Edit/Smart Duplicate %#d", false, 0)]

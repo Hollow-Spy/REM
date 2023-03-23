@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UpperBodyMask 1
+  m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000000000000000000000000000000000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Armature
+    m_Weight: 1
+  - m_Path: Armature/Hip
+    m_Weight: 1
+  - m_Path: Armature/Hip/Leg.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Leg.L/LowerLeg.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Leg.L/LowerLeg.L/Foot.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Leg.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Leg.R/LowerLeg.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Leg.R/LowerLeg.R/Foot.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.L/ForeArm.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.L/ForeArm.L/Index.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.L/ForeArm.L/Index.L/Index2.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.L/ForeArm.L/Index.L/Index2.L/Index3.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.L/ForeArm.L/MFinger.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.L/ForeArm.L/MFinger.L/MFinger2.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.L/ForeArm.L/MFinger.L/MFinger2.L/MFinger3.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.L/ForeArm.L/Pinky.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.L/ForeArm.L/Pinky.L/Pinky2.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.L/ForeArm.L/Pinky.L/Pinky2.L/Pinky3.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.L/ForeArm.L/Thumb.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.L/ForeArm.L/Thumb.L/Thumb2.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.L/ForeArm.L/Thumb.L/Thumb2.L/Thumb3.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.L/ForeArm.L/WeirdFinger.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.L/ForeArm.L/WeirdFinger.L/WeirdFinger2.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.L/ForeArm.L/WeirdFinger.L/WeirdFinger2.L/WeirdFinger3.L
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.R/ForeArm.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.R/ForeArm.R/Index.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.R/ForeArm.R/Index.R/Index2.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.R/ForeArm.R/Index.R/Index2.R/Index3.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.R/ForeArm.R/MFinger.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.R/ForeArm.R/MFinger.R/MFinger2.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.R/ForeArm.R/MFinger.R/MFinger2.R/MFinger3.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.R/ForeArm.R/Pinky.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.R/ForeArm.R/Pinky.R/Pinky2.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.R/ForeArm.R/Pinky.R/Pinky2.R/Pinky3.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.R/ForeArm.R/Thumb.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.R/ForeArm.R/Thumb.R/Thumb2.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.R/ForeArm.R/Thumb.R/Thumb2.R/Thumb3.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.R/ForeArm.R/WeirdFinger.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.R/ForeArm.R/WeirdFinger.R/WeirdFinger2.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Arm.R/ForeArm.R/WeirdFinger.R/WeirdFinger2.R/WeirdFinger3.R
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Neck
+    m_Weight: 1
+  - m_Path: Armature/Hip/Spine1/Chest/Neck/Head
+    m_Weight: 1
+  - m_Path: Cube
+    m_Weight: 1
+  - m_Path: Cube.001
+    m_Weight: 1
+  - m_Path: Cube.002
+    m_Weight: 1
+  - m_Path: Empty.001
+    m_Weight: 1

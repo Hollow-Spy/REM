@@ -10,6 +10,12 @@ public class GlitchScreenController : MonoBehaviour
     public float glitchPower;
     public float scanLinesPower;
 
+    private void OnDisable()
+    {
+        Mat.SetFloat("_NoiseAmount", 0);
+        Mat.SetFloat("_GlitchPower", 0);
+        Mat.SetFloat("_ScanLinesPower", 0);
+    }
 
     // Update is called once per frame
     void Update()
