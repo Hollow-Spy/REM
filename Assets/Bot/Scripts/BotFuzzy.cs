@@ -20,6 +20,7 @@ public class BotFuzzy : MonoBehaviour
     [SerializeField] BotFOV botfov;
     [SerializeField] LayerMask PlayerMask;
     [SerializeField] LayerMask ObstacleMask;
+    PlayerHealth playerHealth;
   [Header("Aesthetics Settings")]
     [SerializeField] GameObject RedBeamLight, GreenBeamLight,AlertSound;
     [SerializeField] Material EyeMat;
@@ -68,6 +69,7 @@ public class BotFuzzy : MonoBehaviour
         MoveSpeedBeforeStop = MoveSpeed;
         agent.speed = MoveSpeed;
         PlayerPos = GameObject.FindGameObjectWithTag("Player").transform;
+        playerHealth = PlayerPos.GetComponent<PlayerHealth>();
     }
 
     void AgentMove(Vector3 destination)
@@ -528,6 +530,7 @@ IEnumerator AlertNumerator()
         {
          
             Instantiate(PunchLandSound, BotTransform.position, Quaternion.identity);
+            playerHealth.HurtPlayer();
 
         }
 
