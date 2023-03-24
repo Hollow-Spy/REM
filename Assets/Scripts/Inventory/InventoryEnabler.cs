@@ -31,6 +31,7 @@ public class InventoryEnabler : MonoBehaviour
             BlackFadeObject.SetActive(true);
             StartCoroutine(Switch());
 
+
         }
 
 

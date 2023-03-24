@@ -491,8 +491,9 @@ IEnumerator AlertNumerator()
             Instantiate(SwingPunchSound, BotTransform.position, Quaternion.identity);
             AttackDelay = AttackDelayValue;
             Invoke("ResetAttackDelay", AttackDelay);
+            EnableSpeed();
             animator.Play("Attack");
-            Invoke("StopSpeed", 0.06f); 
+            Invoke("StopSpeed", 0.09f); 
         }
         else
         {
