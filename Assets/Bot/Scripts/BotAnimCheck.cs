@@ -21,6 +21,10 @@ public class BotAnimCheck : MonoBehaviour
     {
         BotAI.EnableSpeed();
     }
+    public void CheckSurrounding()
+    {
+        BotAI.CheckingSurroundings();
+    }
 
 
     public void AttackHitCheck()

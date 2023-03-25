@@ -5,8 +5,7 @@ using UnityEngine;
 public class BotCollisionDetection : MonoBehaviour
 {
     [SerializeField] BotFuzzy bot;
-    [SerializeField] float Delay;
-    float delayT;
+ 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -14,11 +13,19 @@ public class BotCollisionDetection : MonoBehaviour
             bot.isCollidingPlayer = true;
         }
     }
+    private void OnCollisionStay(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            bot.IncreaseBodyBlockTimer();
+        }
+    }
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             bot.isCollidingPlayer = false;
+            bot.ResetBodyBlockTimer();
         }
     }
 }

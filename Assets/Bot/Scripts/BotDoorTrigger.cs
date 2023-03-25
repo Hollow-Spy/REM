@@ -39,7 +39,7 @@ public class BotDoorTrigger : MonoBehaviour
             }
             else
             {
-                if (BotAI.State == "Chase" || BotAI.State == "Patrol")
+                if (BotAI.State == "Chase" || (BotAI.State == "Patrol" && BotAI._PCDelay > 0))
                 {
                     //not force
                     door.Interact();

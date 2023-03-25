@@ -21,33 +21,37 @@ public class BotFuzzy : MonoBehaviour
     [SerializeField] LayerMask PlayerMask;
     [SerializeField] LayerMask ObstacleMask;
     PlayerHealth playerHealth;
+    [SerializeField] LineRenderer DebugLine;
   [Header("Aesthetics Settings")]
     [SerializeField] GameObject RedBeamLight, GreenBeamLight,AlertSound;
     [SerializeField] Material EyeMat;
     [SerializeField] GlitchScreenController ScreenGlitcher;
     [SerializeField] float ScreenGlitchRadius;
     [SerializeField] AudioSource ScanAudiosource;
-    [SerializeField] GameObject PunchLandSound,SwingPunchSound;
+    [SerializeField] GameObject PunchLandSound,SwingPunchSound,ThrowOffSound;
     [Header("Patrol Settings")]
     [SerializeField] Transform[] PatrolPoint;
     [SerializeField] float PatrolRadius;
-    IEnumerator PatrolCoroutine,PatrolDelayCoroutine;
+    IEnumerator PatrolCoroutine,PatrolDelayCoroutine,SprintPatrolCoroutine;
     [SerializeField] float PCDelay;
-    float _PCDelay;
+    public float _PCDelay;
     [Header("Movement Settings")]
     [SerializeField] float MoveSpeed; //sprint mode needs to be added
     [SerializeField] float Acceleration;
     float MoveSpeedBeforeStop;
     public bool isCollidingPlayer;
+    float BodyBlockTimer;
     [Header("Movement Detection Settings")]
     [SerializeField] float GraceTime;
     float GraceT;
     Vector3 LastMovement;
+    Vector3 LastHeardLocation;
     bool FirstMovementCheck = true;
     Quaternion LastRotation;
+    IEnumerator ResetLastHeardLocationCoroutine;
     IEnumerator AlertCoroutine;
     [Header("Chase Settings")]
-    IEnumerator ChaseCoroutine,StaminaUpCoroutine,StaminaDownCoroutine;
+    IEnumerator ChaseCoroutine;
     [SerializeField] float MaxChaseTime;
     [SerializeField] float MaxStamina;
     [SerializeField] float SprintMultiplier;
@@ -236,15 +240,73 @@ public class BotFuzzy : MonoBehaviour
 
     }
 
+
+
     public void PlayerStepNearby(Vector3 pos, float radius)
     {
-        Vector3 InterestPoint = CheckPointOfInterest(pos, radius, false);
-        if(InterestPoint != Vector3.zero && State == "Patrol" && !animator.GetBool("PatrolCheck"))
+        if(State == "Patrol" || State == "Alert")
         {
-            AgentMove(InterestPoint);
-        }
+            Vector3 dir = (pos - BotTransform.position).normalized;
+            float distance = Vector3.Distance(BotTransform.position,pos);
+            if (Physics.Raycast(BotTransform.position, dir , distance, ObstacleMask))
+            {
+                Debug.Log("Radius small");
+                radius = radius / 2;
+            }
+            Vector3 InterestPoint = CheckPointOfInterest(pos, radius, false);
+            if (InterestPoint != Vector3.zero)
+            {
+                LastHeardLocation = InterestPoint;
 
+                if (ResetLastHeardLocationCoroutine != null)
+                {
+                    StopCoroutine(ResetLastHeardLocationCoroutine);
+                    ResetLastHeardLocationCoroutine = ResetLastHeardLocationNumerator();
+                    StartCoroutine(ResetLastHeardLocationCoroutine);
+                }
+
+             
+               
+                if (!animator.GetBool("PatrolCheck") && _PCDelay <= 0)
+                {
+                    Debug.Log("here");
+                    AgentMove(InterestPoint);
+                    if (SprintPatrolCoroutine == null)
+                    {
+                        SprintPatrolCoroutine = PatrolChanceSprintNumerator();
+                        StartCoroutine(SprintPatrolCoroutine);
+                    }
+            
+                }
+              
+            }
+        }
+      
     }
+
+    IEnumerator ResetLastHeardLocationNumerator()
+    {
+        yield return new WaitForSeconds(5);
+        LastHeardLocation = Vector3.zero;
+    }
+
+    IEnumerator PatrolChanceSprintNumerator()
+    {
+      //  Debug.Log("chance");
+            float chance = ChanceOnSprint(LastHeardLocation);
+            float Hit = Random.Range(0.0f, 1f);
+            if (Hit <= chance)
+            {
+                StartSprinting(true);
+            }
+            else
+            {
+                StartSprinting(false);
+            }
+        yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
+        SprintPatrolCoroutine = null;
+    }
+
 
     Vector3 CheckPointOfInterest(Vector3 pos, float radius, bool ignoreDistance)
     {
@@ -278,6 +340,26 @@ public class BotFuzzy : MonoBehaviour
         return Vector3.zero;
     }
 
+    
+
+   public void CheckingSurroundings()
+    {
+        StartCoroutine(CheckingSurroundingsNumerator());
+       
+    }
+    IEnumerator CheckingSurroundingsNumerator()
+    {
+        while(animator.GetBool("PatrolCheck"))
+        {
+            if(LastHeardLocation != Vector3.zero)
+            {
+                RotateTowards(LastHeardLocation);
+            }
+         
+            yield return null;
+        }
+      
+    }
    void SetRedMode(bool state)
     {
         if(state)
@@ -364,8 +446,11 @@ IEnumerator AlertNumerator()
             {
                 yield return null;
             }
-
-        }
+            if (GraceT < GraceTime * .6f)
+            {
+                GraceT -= (GraceTime * .4f);
+            }
+         }
 
         // Debug.Log(GraceT);
         StartCoroutine(DecreaseScanAudioNumerator());
@@ -391,6 +476,32 @@ IEnumerator AlertNumerator()
         ScanAudiosource.volume = 0;
     }
 
+    public void ResetBodyBlockTimer()
+    {
+        BodyBlockTimer = 0;
+    }
+
+    public void IncreaseBodyBlockTimer()
+    {
+        BodyBlockTimer += Time.deltaTime;
+        
+    }
+
+    void BodyBlockCheck()
+    {
+        if (isCollidingPlayer && _PCDelay > 2 && BodyBlockTimer > 2)
+        {
+           
+                BodyBlockTimer = 0;
+                Physics.IgnoreCollision(BotTransform.GetComponent<Collider>(), PlayerPos.GetComponent<Collider>(), true);
+                //throw em off
+                Invoke("RegainCollision", 3);
+                PlayerPos.GetComponent<PlayerMovement>().ThrownOff();
+            Instantiate(ThrowOffSound, BotTransform.position, Quaternion.identity);
+
+        }
+      
+    }
     IEnumerator PatrolNumerator()
     {
         int lastPatrolPoint=-1;
@@ -407,19 +518,31 @@ IEnumerator AlertNumerator()
                 }
             }
             lastPatrolPoint = randomnum;
+
             Vector3 randomPos = PatrolPoint[randomnum].position;
-            AgentMove( CheckPointOfInterest(randomPos, PatrolRadius,true));
+            Vector3 AgentDestination = CheckPointOfInterest(randomPos, PatrolRadius, true);
+            AgentMove( AgentDestination);
 
             float initialDistance = Vector3.Distance(randomPos, BotTransform.position);
             float maxdistance = ListenRange + PatrolRadius;
             float Reduction = initialDistance / maxdistance;
           
             yield return new WaitForSeconds(.1f);
-            while(!isCollidingPlayer && agent.remainingDistance > 0 && agent.pathStatus==NavMeshPathStatus.PathComplete && agent.pathStatus != NavMeshPathStatus.PathInvalid)
-            {
-                yield return null;
-            }
+            //agent.pathStatus==NavMeshPathStatus.PathComplete
+       
 
+                while (!isCollidingPlayer && agent.remainingDistance > 0 && agent.hasPath  && agent.pathStatus != NavMeshPathStatus.PathInvalid )
+                {
+                    // Debug.Log("inside loop1");
+                    yield return null;
+                }
+            //agent.hasPath
+
+
+
+
+
+            BodyBlockCheck();
             if(_PCDelay <= 0)
             {
                 if (Reduction < .5f)
@@ -433,12 +556,22 @@ IEnumerator AlertNumerator()
                 yield return new WaitForSeconds(.1f);
                 while (animator.GetBool("PatrolCheck") == true)
                 {
+                  //  Debug.Log("inside loop2");
                     yield return null;
                 }
             }
 
 
         }
+    }
+
+    public 
+
+
+    void RegainCollision()
+    {
+        Physics.IgnoreCollision(BotTransform.GetComponent<Collider>(), PlayerPos.GetComponent<Collider>(), false);
+
     }
 
     IEnumerator ChanceSprintNumerator()
@@ -487,7 +620,7 @@ IEnumerator AlertNumerator()
             yield return null;
             AgentMove(PlayerPos.position);
             CheckAttackRange();
-            RotateTowardsPlayer();
+            RotateTowards(PlayerPos.position);
             if (botfov.canSeePlayer)
             {
              
@@ -505,12 +638,12 @@ IEnumerator AlertNumerator()
         SetState("Patrol");
     }
 
-    void RotateTowardsPlayer()
+    void RotateTowards(Vector3 pos)
     {
-        if(Vector3.Distance(BotTransform.position,PlayerPos.position) <= ScreenGlitchRadius)
+        if(Vector3.Distance(BotTransform.position, pos) <= ScreenGlitchRadius)
         {
           
-            Vector3 targetDirection = PlayerPos.position - BotTransform.position;
+            Vector3 targetDirection = pos - BotTransform.position;
              Vector3 rot = Vector3.RotateTowards(BotTransform.forward, targetDirection, 10*Time.deltaTime,0.0f );
             BotTransform.rotation = Quaternion.LookRotation(rot);
         }
@@ -591,7 +724,7 @@ IEnumerator AlertNumerator()
     {
         float Chance = 0;
 
-        if(Vector3.Distance(BotTransform.position, Pos) < ScreenGlitchRadius * 1.2f )
+        if(Vector3.Distance(BotTransform.position, Pos) < ScreenGlitchRadius  )
         {
             Chance += .2f;
         }
@@ -607,6 +740,7 @@ IEnumerator AlertNumerator()
         {
             Chance += .25f;
         }
+        
 
         return Chance;
     }
@@ -684,6 +818,12 @@ IEnumerator AlertNumerator()
         }
         float distance = Vector3.Distance(BotTransform.position, PlayerPos.position);
 
+        if(agent.hasPath)
+        {
+            DebugLine.positionCount = agent.path.corners.Length;
+            DebugLine.SetPositions(agent.path.corners);
+            DebugLine.enabled = true;
+        }
      
         if (distance < ScreenGlitchRadius )
         {

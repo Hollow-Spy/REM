@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask GroundMask;
     Vector3 currentVelocity;
     public float SpeedTap=0;
-
+    bool StopMovement;
 
     bool isGrounded;
     public bool isSprinting,isWalking;
@@ -29,6 +29,17 @@ public class PlayerMovement : MonoBehaviour
         charController = GetComponent<CharacterController>();
     }
 
+    public void ThrownOff()
+    {
+        StopMovement = true;
+        animator.Play("Fall");
+    }
+    public void BackUp()
+    {
+        
+        StopMovement = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -39,7 +50,10 @@ public class PlayerMovement : MonoBehaviour
             currentVelocity.y = -2;
         }
 
+        if(!StopMovement)
+        {
 
+       
         Vector3 movedir = new Vector3( Input.GetAxisRaw("Horizontal"),0, Input.GetAxisRaw("Vertical"));
 
         if(movedir != Vector3.zero)
@@ -90,5 +104,6 @@ public class PlayerMovement : MonoBehaviour
         charController.Move(currentVelocity * Time.deltaTime);
         transform.position = new Vector3(transform.position.x, InitialYPos, transform.position.z);
 
+        }
     }
 }
