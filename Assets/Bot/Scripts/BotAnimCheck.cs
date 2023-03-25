@@ -14,6 +14,7 @@ public class BotAnimCheck : MonoBehaviour
     }
     public void EndPatrolCheck()
     {
+        BotAI.PatrolCheckDelay();
         animator.SetBool("PatrolCheck", false);
     }
     public void CanMove()

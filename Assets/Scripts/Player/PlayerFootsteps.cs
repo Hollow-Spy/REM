@@ -27,8 +27,8 @@ public class PlayerFootsteps : MonoBehaviour
     float CurrentTime,TimeReach;
 
     PlayerMovement playermov;
-
-  
+    [SerializeField] float NoiseRadius;
+    [SerializeField] BotFuzzy bot;
 
     private void Start()
     {
@@ -75,6 +75,16 @@ public class PlayerFootsteps : MonoBehaviour
             {
                 CurrentTime = TimeReach;
                 Instantiate(CurrentSteps[Random.Range(0, CurrentSteps.Length)], transform.position, Quaternion.identity);
+                if(playermov.isSprinting)
+                {
+                    bot.PlayerStepNearby(transform.position, NoiseRadius * 2);
+                }
+                else
+                {
+                    bot.PlayerStepNearby(transform.position, NoiseRadius);
+
+                }
+
             }
 
 

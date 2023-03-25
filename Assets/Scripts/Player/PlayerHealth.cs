@@ -14,6 +14,25 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] Transform botTransform;
     [SerializeField] GameObject[] BloodPuddles;
     [SerializeField] float shake_power, shake_frequency, shake_time;
+    [SerializeField] GameObject GameOverObj;
+
+    [SerializeField] SlotShower slots;
+    public void Heal()
+    {
+        for(int i=0;i<slots.ItemsStored.Length;i++ )
+        {
+            if(slots.ItemsStored[i].Contains("Medkit"))
+            {
+                slots.SetItemUsable(slots.ItemsStored[i], false);
+            }
+        }
+        Health=3;
+        animator.SetBool("HealthCritical", false);
+        BloodScreenanimator.SetBool("HealthCritical", false);
+        animator.SetLayerWeight(animator.GetLayerIndex("HurtLayer"), 0);
+        updateMeters();
+
+    }
     public void HurtPlayer()
     {
 
@@ -22,6 +41,8 @@ public class PlayerHealth : MonoBehaviour
         {
             StopCoroutine(ReducingLayerWeightCoroutine);
         }
+
+
         animator.SetLayerWeight(animator.GetLayerIndex("HurtLayer") , 1);
         animator.Play("PlayerHurt");
         updateMeters();
@@ -47,7 +68,7 @@ public class PlayerHealth : MonoBehaviour
         
         if(Health <= 0)
         {
-            //death
+            GameOverObj.SetActive(true);
         }
 
 
@@ -59,6 +80,7 @@ public class PlayerHealth : MonoBehaviour
         switch(Health)
         {
             case 3:
+                BloodDripParticles.Stop();
                 nervousSystem.color = Color.white;
                 break;
             case 2:

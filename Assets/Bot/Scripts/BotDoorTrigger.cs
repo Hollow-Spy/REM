@@ -16,11 +16,38 @@ public class BotDoorTrigger : MonoBehaviour
             }
             else
             {
-                //not force
-                door.Interact();
-                BotAI.TryingToOpenDoor();
+                if(BotAI.State == "Patrol")
+                {
+                    //not force
+                    door.Interact();
+                    BotAI.TryingToOpenDoor();
+                }
+              
             }
            
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+
+        if (other.CompareTag("Bot") && door.isOpen)
+        {
+            if (door.isBusy)
+            {
+                //force
+            }
+            else
+            {
+                if (BotAI.State == "Chase" || BotAI.State == "Patrol")
+                {
+                    //not force
+                    door.Interact();
+                   
+                }
+
+            }
+
         }
     }
 }

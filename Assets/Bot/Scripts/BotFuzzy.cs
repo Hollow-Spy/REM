@@ -13,7 +13,7 @@ public class BotFuzzy : MonoBehaviour
     [SerializeField] LayerMask GroundLayer;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] float ListenRange;
-    [SerializeField] string State;
+    public string State;
     [SerializeField] Animator animator;
     [SerializeField] Transform PlayerPos;
     [SerializeField] SkinnedMeshRenderer Meshrenderer;
@@ -31,12 +31,14 @@ public class BotFuzzy : MonoBehaviour
     [Header("Patrol Settings")]
     [SerializeField] Transform[] PatrolPoint;
     [SerializeField] float PatrolRadius;
-    IEnumerator PatrolCoroutine;
-
+    IEnumerator PatrolCoroutine,PatrolDelayCoroutine;
+    [SerializeField] float PCDelay;
+    float _PCDelay;
     [Header("Movement Settings")]
     [SerializeField] float MoveSpeed; //sprint mode needs to be added
     [SerializeField] float Acceleration;
     float MoveSpeedBeforeStop;
+    public bool isCollidingPlayer;
     [Header("Movement Detection Settings")]
     [SerializeField] float GraceTime;
     float GraceT;
@@ -61,7 +63,7 @@ public class BotFuzzy : MonoBehaviour
     [SerializeField] float AttackDelayValue;
     float AttackDelay;
     [SerializeField] Transform AttackPosition;
-  
+    
   
     private void Start()
     {
@@ -213,6 +215,37 @@ public class BotFuzzy : MonoBehaviour
         }
     }
 
+    public void PatrolCheckDelay()
+    {
+        _PCDelay = PCDelay;
+        if(PatrolDelayCoroutine != null)
+        {
+            StopCoroutine(PatrolDelayCoroutine);
+        }
+        PatrolDelayCoroutine = PatrolDelayNumerator();
+        StartCoroutine(PatrolDelayCoroutine);
+    }
+
+    IEnumerator PatrolDelayNumerator()
+    {
+        while(_PCDelay > 0)
+        {
+            _PCDelay -= Time.deltaTime;
+            yield return null;
+        }
+
+    }
+
+    public void PlayerStepNearby(Vector3 pos, float radius)
+    {
+        Vector3 InterestPoint = CheckPointOfInterest(pos, radius, false);
+        if(InterestPoint != Vector3.zero && State == "Patrol" && !animator.GetBool("PatrolCheck"))
+        {
+            AgentMove(InterestPoint);
+        }
+
+    }
+
     Vector3 CheckPointOfInterest(Vector3 pos, float radius, bool ignoreDistance)
     {
 
@@ -307,7 +340,7 @@ IEnumerator AlertNumerator()
         animator.Play("Walk");
      
         yield return new WaitForSeconds(.1f);
-        while (GraceT > 0 && agent.remainingDistance > 0.2f && agent.pathStatus == NavMeshPathStatus.PathComplete && agent.pathStatus != NavMeshPathStatus.PathInvalid)
+        while (!isCollidingPlayer && GraceT > 0 && agent.remainingDistance > 0.2f && agent.pathStatus == NavMeshPathStatus.PathComplete && agent.pathStatus != NavMeshPathStatus.PathInvalid)
         {
             yield return null;
           
@@ -382,23 +415,28 @@ IEnumerator AlertNumerator()
             float Reduction = initialDistance / maxdistance;
           
             yield return new WaitForSeconds(.1f);
-            while(agent.remainingDistance > 0 && agent.pathStatus==NavMeshPathStatus.PathComplete && agent.pathStatus != NavMeshPathStatus.PathInvalid)
+            while(!isCollidingPlayer && agent.remainingDistance > 0 && agent.pathStatus==NavMeshPathStatus.PathComplete && agent.pathStatus != NavMeshPathStatus.PathInvalid)
             {
                 yield return null;
             }
-            if(Reduction < .5f)
+
+            if(_PCDelay <= 0)
             {
-                animator.Play("LookAround");
+                if (Reduction < .5f)
+                {
+                    animator.Play("LookAround");
+                }
+                else
+                {
+                    animator.Play("Stand");
+                }
+                yield return new WaitForSeconds(.1f);
+                while (animator.GetBool("PatrolCheck") == true)
+                {
+                    yield return null;
+                }
             }
-            else
-            {
-                animator.Play("Stand");
-            }
-            yield return new WaitForSeconds(.1f);
-            while(animator.GetBool("PatrolCheck") == true)
-            {
-                yield return null;
-            }
+
 
         }
     }

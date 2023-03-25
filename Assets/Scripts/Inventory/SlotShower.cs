@@ -6,7 +6,7 @@ public class SlotShower : MonoBehaviour
 {
     [SerializeField] Transform[] Slots;
     [SerializeField] Transform[] Items;
-    [SerializeField] string[] ItemsStored;
+    public string[] ItemsStored;
     [SerializeField] bool[] Usable;
     [SerializeField] bool[] SlotTaken;
     [SerializeField] Animator AddedAnim;
