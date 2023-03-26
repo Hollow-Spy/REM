@@ -21,9 +21,6 @@ public class PlayerFootsteps : MonoBehaviour
 
 
     [SerializeField] float TimeForStep=.2f,TimeForSprintStep=.1f;
-    public float SprintTapIncrement=0;
-
- 
     float CurrentTime,TimeReach;
 
     PlayerMovement playermov;
@@ -62,7 +59,7 @@ public class PlayerFootsteps : MonoBehaviour
             if (playermov.isSprinting)
             {
 
-                TimeReach = TimeForSprintStep - (playermov.SpeedTap * 0.04f);
+                TimeReach = TimeForSprintStep;
             }
             else
             {
@@ -75,15 +72,23 @@ public class PlayerFootsteps : MonoBehaviour
             {
                 CurrentTime = TimeReach;
                 Instantiate(CurrentSteps[Random.Range(0, CurrentSteps.Length)], transform.position, Quaternion.identity);
-                if(playermov.isSprinting)
+                if(bot.isActiveAndEnabled)
                 {
-                    bot.PlayerStepNearby(transform.position, NoiseRadius * 2);
-                }
-                else
-                {
-                    bot.PlayerStepNearby(transform.position, NoiseRadius);
+                    if (playermov.isSprinting)
+                    {
 
+                        bot.PlayerStepNearby(transform.position, NoiseRadius * 2);
+
+
+
+                    }
+                    else
+                    {
+                        bot.PlayerStepNearby(transform.position, NoiseRadius);
+
+                    }
                 }
+             
 
             }
 

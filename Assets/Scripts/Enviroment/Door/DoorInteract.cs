@@ -19,6 +19,10 @@ public class DoorInteract : MonoBehaviour
             {
                CanvasTrigger.Splitter.PopUpText("Door is Locked", CanvasTrigger.PopNum);
             }
+            if(doorScript.BotOpenDelay)
+            {
+                CanvasTrigger.Splitter.PopUpText("It's not working", CanvasTrigger.PopNum);
+            }
         }
     }
   

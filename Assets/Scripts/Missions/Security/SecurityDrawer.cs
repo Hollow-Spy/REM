@@ -8,13 +8,16 @@ public class SecurityDrawer : MonoBehaviour
     bool isBusy,isOpen;
     Animator animator;
     public bool ChosenOne;
+    [SerializeField] DrawerAttention AttentionDetector;
     private void Start()
     {
         animator = GetComponentInParent<Animator>();
+        
     }
     public void Interaction()
     {
-        if(!isBusy)
+        AttentionDetector.PlayerGotIt = true;
+        if (!isBusy)
         {
             isOpen = !isOpen;
             isBusy = true;

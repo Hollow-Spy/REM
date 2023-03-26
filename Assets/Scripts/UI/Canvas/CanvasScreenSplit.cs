@@ -28,15 +28,23 @@ public class CanvasScreenSplit : MonoBehaviour
     [SerializeField] MouseInteract[] RayCastInteractors;
     [SerializeField] MouseInteract MainRayCastInteractor;
     [SerializeField] Camera MainCam;
-   
+     public Camera CurrentRoomCamera;
 
-  
+    private void Start()
+    {
+        if(CurrentRoomCamera == null)
+        {
+            CurrentRoomCamera = RoomCameras[0];
+        }
+    }
+
     public void SwitchMainCam(int num)
     {
         RoomCameras[CurrentEnabled].gameObject.SetActive(false);
         RoomCameras[num].gameObject.SetActive(true);
         MainCamImg.texture = MainRenderTextures[num];
         CurrentEnabled = num;
+        CurrentRoomCamera = RoomCameras[num];
         //rayca
         MainRayCastInteractor.gameObject.SetActive(false);
         MainRayCastInteractor.tex_ = MainRenderTextures[num];

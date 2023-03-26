@@ -10,12 +10,16 @@ public class DoorOpener : MonoBehaviour
     public GameObject melody1, melody2,DenySound;
 
     [SerializeField] GameObject[] OpenIcon, CloseIcon, BlockIcon;
+
+    [SerializeField] GameObject DelaySound;
     // Update is called once per frame
 
     public bool isBusy, isOpen,isBlocked;
 
  
+    float MultiClick = 0;
 
+   public bool BotOpenDelay;
    
     public bool ForceCloseNBlock()
     {
@@ -66,7 +70,12 @@ public class DoorOpener : MonoBehaviour
 
                 }
                 Instantiate(DenySound, transform.position, Quaternion.identity);
-              
+                Debug.Log("g");
+                return;
+            }
+           if(BotOpenDelay)
+            {
+                Instantiate(DelaySound, transform.position, Quaternion.identity);
                 return;
             }
 
@@ -74,13 +83,44 @@ public class DoorOpener : MonoBehaviour
             if (isOpen)
             {
                 OpenDoor();
+              
             }
             else
             {
                 CloseDoor();
             }
-
+            return;
         }
+        else
+        {
+            MultiClick++;
+            if (!isOpen && MultiClick == 3)
+            {
+                TemporaryBlock();
+            }
+        }
+
+       
+    }
+
+    void TemporaryBlock()
+    {
+        for (int i = 0; i < OpenIcon.Length; i++)
+        {
+            OpenIcon[i].SetActive(false);
+            CloseIcon[i].SetActive(false);
+            BlockIcon[i].SetActive(true);
+        }
+        isBlocked = true;
+
+        Invoke("Unlock", 10);
+        Invoke("ResetLockDelay", 30);
+    }
+
+
+    void ResetLockDelay()
+    {
+        MultiClick = 0;
     }
 
     public bool ForceOpen()
@@ -119,6 +159,23 @@ public class DoorOpener : MonoBehaviour
             }
         }
         return false;
+    }
+
+   public void BotOpenDelayFunc()
+    {
+        if(!BotOpenDelay)
+        {
+            BotOpenDelay = true;
+            Invoke("ResetBotDelay",5);
+        }
+      
+    }
+    void ResetBotDelay()
+    {
+        BotOpenDelay = false;
+
+   
+
     }
 
     public void BusyON()

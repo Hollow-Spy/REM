@@ -10,6 +10,7 @@ TagManager:
   - PopUpCamStretch
   - Transmitter
   - Bot
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

@@ -13,10 +13,12 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] ParticleSystem BloodParticles,BloodDripParticles;
     [SerializeField] Transform botTransform;
     [SerializeField] GameObject[] BloodPuddles;
-    [SerializeField] float shake_power, shake_frequency, shake_time;
+
     [SerializeField] GameObject GameOverObj;
 
     [SerializeField] SlotShower slots;
+
+
     public void Heal()
     {
         for(int i=0;i<slots.ItemsStored.Length;i++ )

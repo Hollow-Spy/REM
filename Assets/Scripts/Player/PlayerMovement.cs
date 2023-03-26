@@ -13,9 +13,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform GroundCheck;
     [SerializeField] LayerMask GroundMask;
     Vector3 currentVelocity;
-    public float SpeedTap=0;
-    bool StopMovement;
 
+    bool StopMovement;
+    [SerializeField] Transform botTransform;
     bool isGrounded;
     public bool isSprinting,isWalking;
 
@@ -25,10 +25,55 @@ public class PlayerMovement : MonoBehaviour
     {
         Time.timeScale = 1;
         InitialYPos = transform.position.y;
+     
+        Vector3 SavePoint = GameObject.FindGameObjectWithTag("Checkpoint").GetComponent<CheckpointManager>().CheckPointPos;
+        if (SavePoint != Vector3.zero)
+        {
+            transform.position = new Vector3(SavePoint.x, InitialYPos, SavePoint.z);
+        }
+      
         animator = GetComponent<Animator>();
         charController = GetComponent<CharacterController>();
     }
 
+    public void ShoveEnd()
+    {
+        StopMovement = false;
+        StartCoroutine(ReduceShoveAnimWeight());
+    }
+    IEnumerator ReduceShoveAnimWeight()
+    {
+        while (animator.GetLayerWeight(animator.GetLayerIndex("ActionLayer")) > 0)
+        {
+            yield return null;
+            float value = animator.GetLayerWeight(animator.GetLayerIndex("ActionLayer"));
+            animator.SetLayerWeight(animator.GetLayerIndex("ActionLayer"), value-=Time.deltaTime);
+        }
+    }
+
+    IEnumerator RotatingTowardsBotNumerator()
+    {
+        Vector3 botpos;
+        while(StopMovement)
+        {    
+            yield return null;
+            botpos = new Vector3(botTransform.position.x, InitialYPos, botTransform.position.z); 
+            Vector3 targetDirection = botpos - transform.position;
+            Vector3 rot = Vector3.RotateTowards(transform.forward, -targetDirection, 10 * Time.deltaTime, 0.0f);
+            transform.rotation = Quaternion.LookRotation(rot);
+           
+        }
+    }
+
+    public void Shove()
+    {
+        StopMovement = true;
+        transform.LookAt(new Vector3(botTransform.position.x,transform.position.y,botTransform.position.z ));
+        animator.Play("Shove");
+        animator.SetLayerWeight(animator.GetLayerIndex("ActionLayer"), 1);
+        StartCoroutine(RotatingTowardsBotNumerator());
+
+    }
     public void ThrownOff()
     {
         StopMovement = true;
@@ -71,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
                     isSprinting = true;
-                    float SprintSpeed = SprintMultiplier + SpeedTap;
+                    float SprintSpeed = SprintMultiplier;
                     animator.SetFloat("Speed", SprintSpeed - .4f);
                     speed *= SprintSpeed;
                 }

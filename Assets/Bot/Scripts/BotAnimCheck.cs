@@ -6,8 +6,17 @@ public class BotAnimCheck : MonoBehaviour
 {
     [SerializeField] Animator animator;
     [SerializeField] BotFuzzy BotAI;
-    [SerializeField] GameObject WalkSound;
+    [SerializeField] GameObject WalkSound,ShoutSound;
     
+    public void StaggerOver()
+    {
+        BotAI.StaggerOver();
+    }
+
+    public void StaggerShout()
+    {
+        Instantiate(ShoutSound,transform.position,Quaternion.identity);
+    }
    public void StartPatrolCheck()
     {
         animator.SetBool("PatrolCheck", true);

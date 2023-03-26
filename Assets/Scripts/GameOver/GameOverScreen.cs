@@ -11,7 +11,7 @@ public class GameOverScreen : MonoBehaviour
 
     [SerializeField] GameObject Texts;
 
-    [SerializeField] string MainScene, MenuScene;
+    [SerializeField] string  MenuScene;
     [SerializeField] GameObject ClickSound;
 
     void Start()
@@ -60,7 +60,7 @@ public class GameOverScreen : MonoBehaviour
         yield return new WaitForSeconds(1);
         if(Restart)
         {
-            SceneManager.LoadScene(MainScene);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         else
         {

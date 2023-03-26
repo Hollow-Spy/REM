@@ -13,8 +13,8 @@ public class IntercomInteract : MonoBehaviour
     [SerializeField] CanvasPopUpTrigger PopCanvasTrigger;
     IEnumerator SpawnCoroutine;
     [SerializeField] TransmitterManager manager;
-    static float ObstacleSpeed=0.5f, ObstacleRotationSpeed= 1f;
-    static float MinSpawnTime=1, MaxSpawnTime=3f;
+    public static float ObstacleSpeed=0.5f, ObstacleRotationSpeed= 1f;
+    public static float MinSpawnTime=1, MaxSpawnTime=3f;
     bool busy;
     float TimeLeft = 10;
    
@@ -33,6 +33,7 @@ public class IntercomInteract : MonoBehaviour
     }
     void StartGame()
     {
+     
         TimeLeft = 10;
         if (SpawnCoroutine != null)
         {

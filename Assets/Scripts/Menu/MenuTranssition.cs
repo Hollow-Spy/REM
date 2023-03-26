@@ -11,6 +11,10 @@ public class MenuTranssition : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1;
+        if(GameObject.FindGameObjectWithTag("Checkpoint"))
+        {
+            Destroy(GameObject.FindGameObjectWithTag("Checkpoint"));
+        }
     }
 
     public void PlayClicked()

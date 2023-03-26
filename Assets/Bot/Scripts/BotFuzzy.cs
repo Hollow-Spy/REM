@@ -21,14 +21,15 @@ public class BotFuzzy : MonoBehaviour
     [SerializeField] LayerMask PlayerMask;
     [SerializeField] LayerMask ObstacleMask;
     PlayerHealth playerHealth;
-    [SerializeField] LineRenderer DebugLine;
+
   [Header("Aesthetics Settings")]
     [SerializeField] GameObject RedBeamLight, GreenBeamLight,AlertSound;
     [SerializeField] Material EyeMat;
     [SerializeField] GlitchScreenController ScreenGlitcher;
     [SerializeField] float ScreenGlitchRadius;
     [SerializeField] AudioSource ScanAudiosource;
-    [SerializeField] GameObject PunchLandSound,SwingPunchSound,ThrowOffSound;
+    [SerializeField] GameObject PunchLandSound,SwingPunchSound,ThrowOffSound,DoorHitSound,StaggerSound;
+    float HitDoorDelay;
     [Header("Patrol Settings")]
     [SerializeField] Transform[] PatrolPoint;
     [SerializeField] float PatrolRadius;
@@ -58,10 +59,12 @@ public class BotFuzzy : MonoBehaviour
     [SerializeField]
     bool isSprinting;
     float Stamina;
-    [SerializeField] AudioSource ChaseAudioSource;
+    float TimeChasing;
+   [SerializeField] AudioSource ChaseAudioSource;
     [SerializeField] Volume ChaseVolume;
     float AfterChaseDelayValue = 3;
     float AfterChaseDelay;
+    bool isStaggered;
     [Header("Attack Settings")]
     [SerializeField] float AttackRadius;
     [SerializeField] float AttackDelayValue;
@@ -71,6 +74,7 @@ public class BotFuzzy : MonoBehaviour
   
     private void Start()
     {
+        SetState("Patrol");
         Stamina = MaxStamina;
         MoveSpeedBeforeStop = MoveSpeed;
         agent.speed = MoveSpeed;
@@ -85,6 +89,23 @@ public class BotFuzzy : MonoBehaviour
             agent.SetDestination(destination);
         }
     }
+
+    public void Stagger()
+    {
+        isStaggered = true;
+        StopSpeed();
+        animator.Play("Stagger");
+        Instantiate(StaggerSound, transform.position, Quaternion.identity);
+    }
+
+    public void StaggerOver()
+    {
+        isStaggered = false;
+         
+    }
+
+
+
     public void EnableSpeed()
     {
    
@@ -209,14 +230,25 @@ public class BotFuzzy : MonoBehaviour
         FirstMovementCheck = true;
     }
 
+    public bool HasPossibleSight()
+    {
+        Vector3 dir = (PlayerPos.position - BotTransform.position).normalized;
+        float distance = Vector3.Distance(BotTransform.position, PlayerPos.position);
+        if (Physics.Raycast(BotTransform.position, dir, distance, ObstacleMask))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
     public void TryingToOpenDoor()
     {
-        if(State == "Patrol")
-        {
             animator.Play("Stand");
             StopSpeed();
             Invoke("EnableSpeed",2);
-        }
+            return;
     }
 
     public void PatrolCheckDelay()
@@ -241,16 +273,14 @@ public class BotFuzzy : MonoBehaviour
     }
 
 
-
+    
     public void PlayerStepNearby(Vector3 pos, float radius)
     {
         if(State == "Patrol" || State == "Alert")
         {
-            Vector3 dir = (pos - BotTransform.position).normalized;
-            float distance = Vector3.Distance(BotTransform.position,pos);
-            if (Physics.Raycast(BotTransform.position, dir , distance, ObstacleMask))
+           
+            if (!HasPossibleSight())
             {
-                Debug.Log("Radius small");
                 radius = radius / 2;
             }
             Vector3 InterestPoint = CheckPointOfInterest(pos, radius, false);
@@ -269,7 +299,7 @@ public class BotFuzzy : MonoBehaviour
                
                 if (!animator.GetBool("PatrolCheck") && _PCDelay <= 0)
                 {
-                    Debug.Log("here");
+                  
                     AgentMove(InterestPoint);
                     if (SprintPatrolCoroutine == null)
                     {
@@ -565,7 +595,7 @@ IEnumerator AlertNumerator()
         }
     }
 
-    public 
+     
 
 
     void RegainCollision()
@@ -606,7 +636,7 @@ IEnumerator AlertNumerator()
     IEnumerator ChaseNumerator()
     {
         SetRedMode(true);
-        float TimeChasing=MaxChaseTime;
+         TimeChasing=MaxChaseTime;
 
         animator.Play("Walk");
         animator.SetBool("PatrolCheck", false);
@@ -618,18 +648,23 @@ IEnumerator AlertNumerator()
         while(State == "Chase" && TimeChasing > 0)
         {
             yield return null;
-            AgentMove(PlayerPos.position);
-            CheckAttackRange();
-            RotateTowards(PlayerPos.position);
-            if (botfov.canSeePlayer)
+            if (!isStaggered)
             {
-             
-            }
-            else
-            {
-                TimeChasing -= Time.deltaTime;
-            }
+               
+                
+                AgentMove(PlayerPos.position);
+                CheckAttackRange();
+                RotateTowards(PlayerPos.position);
 
+                if (botfov.canSeePlayer)
+                {
+
+                }
+                else
+                {
+                    TimeChasing -= Time.deltaTime;
+                }
+            }  
         }
         AfterChaseDelay = AfterChaseDelayValue;
         Invoke("ResetAfterChase", AfterChaseDelay);
@@ -642,7 +677,6 @@ IEnumerator AlertNumerator()
     {
         if(Vector3.Distance(BotTransform.position, pos) <= ScreenGlitchRadius)
         {
-          
             Vector3 targetDirection = pos - BotTransform.position;
              Vector3 rot = Vector3.RotateTowards(BotTransform.forward, targetDirection, 10*Time.deltaTime,0.0f );
             BotTransform.rotation = Quaternion.LookRotation(rot);
@@ -661,7 +695,7 @@ IEnumerator AlertNumerator()
           
             Instantiate(SwingPunchSound, BotTransform.position, Quaternion.identity);
             AttackDelay = AttackDelayValue;
-            Invoke("ResetAttackDelay", AttackDelay);
+            
             EnableSpeed();
             animator.Play("Attack");
             Invoke("StopSpeed", 0.09f); 
@@ -673,7 +707,7 @@ IEnumerator AlertNumerator()
         
     }
 
-    bool PlayerInAttackRadius()
+    public bool PlayerInAttackRadius()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(AttackPosition.position, AttackRadius, PlayerMask);
 
@@ -700,19 +734,22 @@ IEnumerator AlertNumerator()
 
        if(PlayerInAttackRadius())
         {
-         
             Instantiate(PunchLandSound, BotTransform.position, Quaternion.identity);
             playerHealth.HurtPlayer();
+            playerHealth.GetComponent<ShoveTap>().CanShove = true;
+            Invoke("ResetShoveTimer", 1.5f);
+            AttackDelay = AttackDelayValue * 2f;
 
         }
 
     }
 
-
-    void ResetAttackDelay()
+    void ResetShoveTimer()
     {
-        AttackDelay = 0;
+        playerHealth.GetComponent<ShoveTap>().CanShove = false;
     }
+
+
 
 
     void ResetAfterChase()
@@ -809,20 +846,26 @@ IEnumerator AlertNumerator()
     {
         EyeMat.SetColor("_Emission", Color.green * 3);
     }
+    
+    public void HitDoor()
+    {
+        if(HitDoorDelay <= 0)
+        {
+            HitDoorDelay = Random.Range(.5f, .8f);
+            Instantiate(DoorHitSound, BotTransform.position, Quaternion.identity);
+            TimeChasing-= .5f;
+        }
+        HitDoorDelay -= Time.deltaTime;
+    }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            SetState("Patrol");
-        }
+       
         float distance = Vector3.Distance(BotTransform.position, PlayerPos.position);
 
-        if(agent.hasPath)
+        if(AttackDelay > 0)
         {
-            DebugLine.positionCount = agent.path.corners.Length;
-            DebugLine.SetPositions(agent.path.corners);
-            DebugLine.enabled = true;
+            AttackDelay -= Time.deltaTime;
         }
      
         if (distance < ScreenGlitchRadius )

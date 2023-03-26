@@ -6,8 +6,12 @@ public class LastMissionManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] float TimeLeft;
+    [SerializeField] Transform CheckpointPos;
     void Start()
     {
+        CheckpointManager checkpoint = GameObject.FindGameObjectWithTag("Checkpoint").GetComponent<CheckpointManager>();
+        checkpoint.CheckPointPos = CheckpointPos.position;
+        checkpoint.CurrentMission = 5;
         timeText.gameObject.SetActive(true);
     }
     //https://gamedevbeginner.com/how-to-make-countdown-timer-in-unity-minutes-seconds/
