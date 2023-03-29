@@ -31,7 +31,7 @@ public class BotFuzzy : MonoBehaviour
     [SerializeField] GameObject PunchLandSound,SwingPunchSound,ThrowOffSound,DoorHitSound,StaggerSound;
     float HitDoorDelay;
     [Header("Patrol Settings")]
-    [SerializeField] Transform[] PatrolPoint;
+    public Transform[] PatrolPoint;
     [SerializeField] float PatrolRadius;
     IEnumerator PatrolCoroutine,PatrolDelayCoroutine,SprintPatrolCoroutine;
     [SerializeField] float PCDelay;
@@ -70,8 +70,7 @@ public class BotFuzzy : MonoBehaviour
     [SerializeField] float AttackDelayValue;
     float AttackDelay;
     [SerializeField] Transform AttackPosition;
-    
-  
+
     private void Start()
     {
         SetState("Patrol");
@@ -80,6 +79,7 @@ public class BotFuzzy : MonoBehaviour
         agent.speed = MoveSpeed;
         PlayerPos = GameObject.FindGameObjectWithTag("Player").transform;
         playerHealth = PlayerPos.GetComponent<PlayerHealth>();
+
     }
 
     void AgentMove(Vector3 destination)
@@ -541,7 +541,9 @@ IEnumerator AlertNumerator()
          
             for(int i=0;i<10;i++)
             {
-                randomnum = Random.Range(0, PatrolPoint.Length);
+              
+                    randomnum = Random.Range(0, PatrolPoint.Length);
+          
                 if(randomnum != lastPatrolPoint)
                 {
                     break;
@@ -734,11 +736,13 @@ IEnumerator AlertNumerator()
 
        if(PlayerInAttackRadius())
         {
-            Instantiate(PunchLandSound, BotTransform.position, Quaternion.identity);
+
+            Instantiate(PunchLandSound, BotTransform.position, Quaternion.identity);       
             playerHealth.HurtPlayer();
             playerHealth.GetComponent<ShoveTap>().CanShove = true;
             Invoke("ResetShoveTimer", 1.5f);
             AttackDelay = AttackDelayValue * 2f;
+          
 
         }
 
@@ -760,6 +764,8 @@ IEnumerator AlertNumerator()
     float ChanceOnSprint(Vector3 Pos)
     {
         float Chance = 0;
+
+
 
         if(Vector3.Distance(BotTransform.position, Pos) < ScreenGlitchRadius  )
         {
@@ -877,9 +883,11 @@ IEnumerator AlertNumerator()
             ScreenGlitcher.noiseAmount = NoiseAmount;
             ScreenGlitcher.glitchPower = glitchpower;
             ScreenGlitcher.scanLinesPower = scanlines;
+          
         }
         else
         {
+         
             ScreenGlitcher.noiseAmount = 0;
             ScreenGlitcher.glitchPower = 0;
             ScreenGlitcher.scanLinesPower = 0;
