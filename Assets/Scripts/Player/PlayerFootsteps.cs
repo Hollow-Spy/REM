@@ -16,7 +16,7 @@ public class PlayerFootsteps : MonoBehaviour
 
     [SerializeField] Transform Target;
     [SerializeField] LayerMask FloorMask;
-    [SerializeField] GameObject[] CurrentSteps;
+     GameObject[] CurrentSteps;
     [SerializeField] FootstepList[] FootstepSounds;
 
 

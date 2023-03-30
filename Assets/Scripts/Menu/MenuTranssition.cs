@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class MenuTranssition : MonoBehaviour
 {
     [SerializeField] Animator VolumeAnimation;
-    [SerializeField] GameObject MainScreen,SelectScreen,TransitionSound,LoadGameTransition;
+    [SerializeField] GameObject MainScreen,SelectScreen,TransitionSound,LoadGameTransition,OptionsMenu;
     bool isBusy;
     private void Start()
     {
@@ -17,6 +17,56 @@ public class MenuTranssition : MonoBehaviour
         }
     }
 
+    public bool GetOptionState(int num)
+    {
+        switch(num)
+        {
+            case 0:
+               if(PlayerPrefs.GetInt("SprintToggle") == 1)
+                {
+                    return true;
+                }
+               else
+                {
+                    return false;
+                }
+                break;
+
+        }
+        return false;
+    }
+
+    public void OptionButtonClicked(int num)
+    {
+        switch(num)
+        {
+            case 0:
+                int state = PlayerPrefs.GetInt("SprintToggle");
+             
+                if (state==1)
+                {
+                    PlayerPrefs.SetInt("SprintToggle", 0);
+                }
+                else
+                {
+                    PlayerPrefs.SetInt("SprintToggle", 1);
+                }
+               
+                break;
+        }
+
+    }
+
+    public void OptionsClicked()
+    {
+        if (isBusy)
+        {
+            return;
+        }
+        isBusy = true;
+        StartCoroutine(OptionsNumerator());
+        Transition();
+    }
     public void PlayClicked()
     {
         if(isBusy)
@@ -81,6 +131,15 @@ public class MenuTranssition : MonoBehaviour
         SelectScreen.SetActive(true);
     }
 
+    IEnumerator OptionsNumerator()
+    {
+        while (isBusy)
+        {
+            yield return null;
+        }
+        MainScreen.SetActive(false);
+        OptionsMenu.SetActive(true);
+    }
 
     public void TransitionOver()
     {

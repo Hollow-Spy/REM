@@ -9,6 +9,9 @@ public class SecurityManager : MonoBehaviour
     CanvasScreenSplit Splitter;
     [SerializeField] DoorOpener[] LockedDoors;
     [SerializeField] GameObject DoorOpenSound;
+
+    [SerializeField] Transform CheckPointPos;
+    bool once = true;
     private void Start()
     {
         Splitter = FindObjectOfType<CanvasScreenSplit>();
@@ -69,7 +72,16 @@ public class SecurityManager : MonoBehaviour
         RoomDoorInteract.SetActive(true);
 
         FindObjectOfType<GoalManager>().UpdateGoal(1);
-     
+
+       
+        if(once)
+        {
+            CheckpointManager checkpoint = GameObject.FindGameObjectWithTag("Checkpoint").GetComponent<CheckpointManager>();
+            checkpoint.CheckPointPos = CheckPointPos.position;
+            checkpoint.CurrentMission = 1;
+            once = false;
+        }
+       
     }
 
 

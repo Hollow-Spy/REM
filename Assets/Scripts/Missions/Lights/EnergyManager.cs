@@ -15,20 +15,24 @@ public class EnergyManager : MonoBehaviour
 
     [SerializeField] GameObject LightGuide,LightCharmObj;
 
-    [SerializeField] GameObject Bot;
+    [SerializeField] GameObject bot;
 
     [SerializeField] Transform CheckPointPos;
+
+    [SerializeField] GameObject FiniteDeclaration;
+    void DeclareFinite()
+    {
+        FiniteDeclaration.SetActive(true);
+    }
 
     private void Start()
     {
         CheckpointManager checkpoint = GameObject.FindGameObjectWithTag("Checkpoint").GetComponent<CheckpointManager>();
         checkpoint.CheckPointPos = CheckPointPos.position;
         checkpoint.CurrentMission = 3;
-        if (!Bot.activeSelf)
-        {
-            Bot.SetActive(true);
-        }
-     
+        bot.SetActive(true);
+        Invoke("DeclareFinite", 5);
+
         goalmanager.UpdateGoal(3);
 
         for(int i=0;i<Lights.Length;i++)

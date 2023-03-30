@@ -6,6 +6,7 @@ public class CommandoGoalComplete : MonoBehaviour
 {
     [SerializeField] int NewGoal;
     [SerializeField] GameObject NextMission;
+    [SerializeField] Transform CheckPointPos;
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
@@ -15,6 +16,9 @@ public class CommandoGoalComplete : MonoBehaviour
             {
                 NextMission.SetActive(true);
             }
+            CheckpointManager checkpoint = GameObject.FindGameObjectWithTag("Checkpoint").GetComponent<CheckpointManager>();
+            checkpoint.CheckPointPos = CheckPointPos.position;
+            checkpoint.CurrentMission = 2;
             gameObject.SetActive(false);
         }
     }

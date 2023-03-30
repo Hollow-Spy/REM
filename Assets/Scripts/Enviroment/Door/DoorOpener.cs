@@ -16,11 +16,16 @@ public class DoorOpener : MonoBehaviour
 
     public bool isBusy, isOpen,isBlocked;
 
- 
+    Vector3 soundpos;
     float MultiClick = 0;
 
    public bool BotOpenDelay;
-   
+
+    private void Start()
+    {
+        soundpos = OpenIcon[0].gameObject.transform.position;
+    }
+
     public bool ForceCloseNBlock()
     {
         if(ForceClose())
@@ -69,13 +74,13 @@ public class DoorOpener : MonoBehaviour
                     BlockIcon[i].GetComponent<Animator>().Play("ButtonFlash", - 1,  0.0f); 
 
                 }
-                Instantiate(DenySound, transform.position, Quaternion.identity);
+                Instantiate(DenySound, soundpos, Quaternion.identity);
                 Debug.Log("g");
                 return;
             }
            if(BotOpenDelay)
             {
-                Instantiate(DelaySound, transform.position, Quaternion.identity);
+                Instantiate(DelaySound, soundpos, Quaternion.identity);
                 return;
             }
 
@@ -195,8 +200,8 @@ public class DoorOpener : MonoBehaviour
         }
      
             dooranim.Play("DoorOpen");
-            Instantiate(sound, transform.position, Quaternion.identity);
-            Instantiate(melody1, transform.position, Quaternion.identity);
+            Instantiate(sound, soundpos, Quaternion.identity);
+            Instantiate(melody1, soundpos, Quaternion.identity);
        
        
     }
@@ -211,8 +216,8 @@ public class DoorOpener : MonoBehaviour
 
 
         dooranim.Play("DoorClose");
-        Instantiate(sound2, transform.position, Quaternion.identity);
-        Instantiate(melody2, transform.position, Quaternion.identity);
+        Instantiate(sound2, soundpos, Quaternion.identity);
+        Instantiate(melody2, soundpos, Quaternion.identity);
     }
    
 }

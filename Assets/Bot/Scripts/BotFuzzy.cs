@@ -28,7 +28,7 @@ public class BotFuzzy : MonoBehaviour
     [SerializeField] GlitchScreenController ScreenGlitcher;
     [SerializeField] float ScreenGlitchRadius;
     [SerializeField] AudioSource ScanAudiosource;
-    [SerializeField] GameObject PunchLandSound,SwingPunchSound,ThrowOffSound,DoorHitSound,StaggerSound;
+    [SerializeField] GameObject PunchLandSound,SwingPunchSound,ThrowOffSound,DoorHitSound,StaggerSound,ShoveTutorial;
     float HitDoorDelay;
     [Header("Patrol Settings")]
     public Transform[] PatrolPoint;
@@ -70,6 +70,13 @@ public class BotFuzzy : MonoBehaviour
     [SerializeField] float AttackDelayValue;
     float AttackDelay;
     [SerializeField] Transform AttackPosition;
+    [Header("Finite Settings")]
+    bool isFuzzy;
+
+    public void SetFuzzy()
+    {
+        isFuzzy = true;
+    }
 
     private void Start()
     {
@@ -80,6 +87,14 @@ public class BotFuzzy : MonoBehaviour
         PlayerPos = GameObject.FindGameObjectWithTag("Player").transform;
         playerHealth = PlayerPos.GetComponent<PlayerHealth>();
 
+       
+
+      /*  PlayerPrefs.SetInt("Finite", 1);
+        if(PlayerPrefs.GetInt("Finite") == 1)
+        {
+            isFinite = true;
+        }*/
+        
     }
 
     void AgentMove(Vector3 destination)
@@ -218,12 +233,25 @@ public class BotFuzzy : MonoBehaviour
                     FirstMovementCheck = false;
                     LastMovement = Pos;
                     LastRotation = Rot;
-                    Invoke("ResetFirstMovementCheck", 5);
+                    if(isFuzzy)
+                    {
+
+                        Invoke("ResetFirstMovementCheck", Random.Range(4.0f,7.0f));
+
+                    }
+                    else
+                    {
+                        Invoke("ResetFirstMovementCheck", 5);
+                    }
+                  
                 }
               
             }
         }
     }
+
+
+
 
     void ResetFirstMovementCheck()
     {
@@ -253,7 +281,15 @@ public class BotFuzzy : MonoBehaviour
 
     public void PatrolCheckDelay()
     {
-        _PCDelay = PCDelay;
+        if(isFuzzy)
+        {
+            _PCDelay = Random.Range(PCDelay * .5f, PCDelay*1.5f);
+        }
+        else
+        {
+            _PCDelay = PCDelay;
+        }
+      
         if(PatrolDelayCoroutine != null)
         {
             StopCoroutine(PatrolDelayCoroutine);
@@ -283,7 +319,16 @@ public class BotFuzzy : MonoBehaviour
             {
                 radius = radius / 2;
             }
-            Vector3 InterestPoint = CheckPointOfInterest(pos, radius, false);
+            Vector3 InterestPoint;
+            if (isFuzzy)
+            {
+                 InterestPoint = CheckPointOfInterest(pos, radius, false);
+            }
+            else
+            {
+                InterestPoint = pos;
+            }
+          
             if (InterestPoint != Vector3.zero)
             {
                 LastHeardLocation = InterestPoint;
@@ -316,14 +361,31 @@ public class BotFuzzy : MonoBehaviour
 
     IEnumerator ResetLastHeardLocationNumerator()
     {
-        yield return new WaitForSeconds(5);
+        if(isFuzzy)
+        {
+            yield return new WaitForSeconds(Random.Range(3,8));
+        }
+        else
+        {
+            yield return new WaitForSeconds(5);
+        }
+       
         LastHeardLocation = Vector3.zero;
     }
 
     IEnumerator PatrolChanceSprintNumerator()
     {
-      //  Debug.Log("chance");
-            float chance = ChanceOnSprint(LastHeardLocation);
+        //  Debug.Log("chance");
+        float chance;
+      if (isFuzzy)
+        {
+            chance = ChanceOnSprint(LastHeardLocation);
+        }
+         else
+        {
+            chance = 1;
+        }
+           
             float Hit = Random.Range(0.0f, 1f);
             if (Hit <= chance)
             {
@@ -333,7 +395,15 @@ public class BotFuzzy : MonoBehaviour
             {
                 StartSprinting(false);
             }
-        yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
+       if(isFuzzy)
+        {
+            yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
+        }
+         else
+        {
+            yield return new WaitForSeconds(2);
+        }
+       
         SprintPatrolCoroutine = null;
     }
 
@@ -441,7 +511,16 @@ IEnumerator AlertNumerator()
         EnableSpeed();
         // yield return new WaitForSeconds(1); // add change to move faster 
        // Debug.Log(GraceT * -1.12f);
-        AgentMove(CheckPointOfInterest(LastMovement, GraceT * -1.12f, false)); // the bigger more he moved before the grace time reset the bigger the listen radius
+       if(isFuzzy)
+        {
+            AgentMove(CheckPointOfInterest(LastMovement, GraceT * Random.Range(-1.12f,1.2f), false));
+            // the bigger more he moved before the grace time reset the bigger the listen radius
+        }
+        else
+        {
+              AgentMove(LastMovement);
+        }
+     
         GraceT += GraceTime;  //reset grace time, so if moving during alert will trigger a chase
         if (GraceT < 0)
         {
@@ -541,8 +620,18 @@ IEnumerator AlertNumerator()
          
             for(int i=0;i<10;i++)
             {
-              
+              if(isFuzzy)
+                {
                     randomnum = Random.Range(0, PatrolPoint.Length);
+                }
+              else
+                {
+                    randomnum = lastPatrolPoint+1;
+                    if(randomnum >= PatrolPoint.Length)
+                    {
+                        randomnum = 0;
+                    }
+                }
           
                 if(randomnum != lastPatrolPoint)
                 {
@@ -552,7 +641,16 @@ IEnumerator AlertNumerator()
             lastPatrolPoint = randomnum;
 
             Vector3 randomPos = PatrolPoint[randomnum].position;
-            Vector3 AgentDestination = CheckPointOfInterest(randomPos, PatrolRadius, true);
+            Vector3 AgentDestination;
+            if (isFuzzy)
+            {
+                 AgentDestination = CheckPointOfInterest(randomPos, PatrolRadius, true);
+            }
+            else
+            {
+                AgentDestination = randomPos;
+            }
+        
             AgentMove( AgentDestination);
 
             float initialDistance = Vector3.Distance(randomPos, BotTransform.position);
@@ -610,8 +708,25 @@ IEnumerator AlertNumerator()
     {
         while(State == "Chase")
         {
-            yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
-            float chance = ChanceOnSprint(LastMovement);
+            if(isFuzzy)
+            {
+                yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
+            }   
+            else
+            {
+                yield return new WaitForSeconds(1);
+            }
+          
+            float chance;
+            if (isFuzzy)
+            {
+                 chance = ChanceOnSprint(LastMovement);
+            }
+            else
+            {
+                chance = 1;
+            }
+          
             float Hit = Random.Range(0.0f, 1f);
             if (Hit <= chance)
             {
@@ -742,7 +857,10 @@ IEnumerator AlertNumerator()
             playerHealth.GetComponent<ShoveTap>().CanShove = true;
             Invoke("ResetShoveTimer", 1.5f);
             AttackDelay = AttackDelayValue * 2f;
-          
+            if(ShoveTutorial)
+            {
+                ShoveTutorial.SetActive(true);
+            }
 
         }
 

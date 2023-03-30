@@ -20,9 +20,11 @@ public class PlayerMovement : MonoBehaviour
     public bool isSprinting,isWalking;
 
     float InitialYPos;
+    bool SprintToggle;
 
     void Start()
     {
+       
         Time.timeScale = 1;
         InitialYPos = transform.position.y;
      
@@ -34,6 +36,13 @@ public class PlayerMovement : MonoBehaviour
       
         animator = GetComponent<Animator>();
         charController = GetComponent<CharacterController>();
+
+       
+        if (PlayerPrefs.GetInt("SprintToggle")==1)
+        {
+            SprintToggle = true;
+        }
+      
     }
 
     public void ShoveEnd()
@@ -112,18 +121,37 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetFloat("Speed", 1);
 
                 isWalking = true;
+               if(!SprintToggle)
+               {
+                        if (Input.GetKey(KeyCode.LeftShift))
+                        {
+                            isSprinting = true;
+                            float SprintSpeed = SprintMultiplier;
+                            animator.SetFloat("Speed", SprintSpeed - .4f);
+                            speed *= SprintSpeed;
+                        }
+                        else
+                        {
+                            isSprinting = false;
+                        }
+               }    
+            else
+                {
+                        if (Input.GetKeyDown(KeyCode.LeftShift))
+                        {
+                            isSprinting = !isSprinting;
+                           
+                        }
+                        if(isSprinting)
+                        {
+                            float SprintSpeed = SprintMultiplier;
+                            animator.SetFloat("Speed", SprintSpeed - .4f);
+                            speed *= SprintSpeed;
+                        }
+                     
 
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    isSprinting = true;
-                    float SprintSpeed = SprintMultiplier;
-                    animator.SetFloat("Speed", SprintSpeed - .4f);
-                    speed *= SprintSpeed;
-                }
-                else
-                {
-                    isSprinting = false;
-                }
+
+                    }
 
                 charController.Move(-transform.forward * speed  * Time.deltaTime);
             }
